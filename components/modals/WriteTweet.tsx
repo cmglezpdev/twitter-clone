@@ -8,8 +8,9 @@ import { AiOutlineFileGif } from 'react-icons/ai'
 import img from '../../public/avatar.png'
 
 export const WriteTweetModal = () => {
+    
     return (
-        <div className='fixed inset-0 flex bg-gray-200'>
+        <div className='fixed inset-0 flex bg-modal'>
             <div className='flex w-[50%] flex-wrap m-auto bg-white p-3 rounded-lg'>
                 <div className='w-full mb-3'>
                     <div className='hover:bg-gray-300 p-2 inline-block transition-colors rounded-full'>
@@ -22,9 +23,9 @@ export const WriteTweetModal = () => {
                 </div>
                 <div className='w-[85%]'>
                     <textarea
-                        rows={10}
+                        rows={5}
                         placeholder="What's happening?" 
-                        className='outline-none w-full resize-none text-xl border-b-2 border-gray-300'
+                        className='outline-none w-full resize-none text-2xl border-b-2 border-gray-300'
                     />
                     <div className='w-full flex justify-between'>
                         <div>
