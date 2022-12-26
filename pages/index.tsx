@@ -1,7 +1,10 @@
-import { SideMenu } from "../components";
+import { Feed, SideMenu } from "../components";
 
 export default function Home() {
   return (
-    <SideMenu />
+    <div className="w-screen h-screen flex">
+      <SideMenu />
+      <Feed />
+    </div>
   )
 }
