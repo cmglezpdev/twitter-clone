@@ -18,7 +18,7 @@ export const SideMenu = () => {
         <div className='w-full h-screen p-10'>
             <Link href='/home'>
                 <div className='flex items-center my-2'>
-                    <BsTwitter className='text-4xl text-blue-600 mr-4' />
+                    <BsTwitter className='text-4xl text-twitter-blue mr-4' />
                     <span className='text-2xl font-bold'>Twitter</span>
                 </div>
             </Link>
@@ -49,7 +49,7 @@ export const SideMenu = () => {
             </Link>
 
             <button 
-                className='bg-blue-500 hover:bg-blue-600 transition-colors py-4 px-10 font-bold text-white rounded-full w-full mt-5 text-xl'
+                className='bg-twitter-blue hover:bg-blue-600 transition-colors py-4 px-10 font-bold text-white rounded-full w-full mt-5 text-xl'
                 onClick={() => setOpenTweetModal(true)}
             >
                 Tweet
