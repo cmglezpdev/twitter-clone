@@ -13,7 +13,7 @@ interface FormData {
     password?: string;
 }
  
-const Register = () => {
+const RegisterPage = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -145,4 +145,4 @@ const Register = () => {
     )
 }
 
-export default Register;
+export default RegisterPage;
