@@ -14,6 +14,9 @@ module.exports = {
       gridTemplateColumns: {
         "twitter": "1.5fr 3fr 2fr",
       },
+      zIndex: {
+        "inf": "999999"
+      }
     },
   },
   plugins: [],
