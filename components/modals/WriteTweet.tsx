@@ -1,3 +1,4 @@
+import { FC, MouseEvent, useRef } from 'react';
 import Image from 'next/image';
 
 import { IoMdClose } from 'react-icons/io'
@@ -7,13 +8,29 @@ import { AiOutlineFileGif } from 'react-icons/ai'
 
 import img from '../../public/avatar.png'
 
-export const WriteTweetModal = () => {
-    
+interface Props {
+    open: boolean;
+    closeModal: () => void;
+}
+
+export const WriteTweetModal:FC<Props> = ({ open, closeModal }) => {
+
+    const bgModal = useRef<HTMLDivElement>(null);
+
+    if (!open) return null;
+
+    const handleModal = ( e:MouseEvent<HTMLDivElement> ) => {
+        if( bgModal.current === e.target ) closeModal()
+    }
+
     return (
-        <div className='fixed inset-0 flex bg-modal'>
+        <div ref={bgModal} className='fixed inset-0 flex bg-modal z-inf' onClick={(e) => handleModal(e)}>
             <div className='flex w-[50%] flex-wrap m-auto bg-white p-3 rounded-lg'>
                 <div className='w-full mb-3'>
-                    <div className='hover:bg-gray-300 p-2 inline-block transition-colors rounded-full'>
+                    <div 
+                        className='hover:bg-gray-300 p-2 inline-block transition-colors rounded-full'
+                        onClick={closeModal}
+                    >
                         <IoMdClose className='cursor-pointer font-bold text-2xl' />
                     </div>
                 </div>
