@@ -1,10 +1,35 @@
+import { FC, ReactNode } from "react";
+import Head from "next/head";
+import { LeftPanel, SideMenu, TopBar } from "../components";
 
-const AppLayout = () => {
-    return (
-        <h1 className="text-3xl font-bold underline text-red-200">
-          Hello world!
-        </h1>
-    )
+interface Props {
+    title: string;
+    pageDescription: string;
+    children: ReactNode;
 }
 
-export default AppLayout
+export const AppLayout:FC<Props> = ( props ) => {
+
+    const { title, pageDescription, children } = props;
+
+    return (
+        <>
+            <Head>
+                <meta name='description' content={pageDescription} />
+                <meta name='og:title' content={title} />
+                <meta name='og:description' content={pageDescription} />
+                <title>{ title }</title>
+            </Head>
+            <main className="w-screen h-screen grid grid-cols-twitter">
+                <SideMenu />
+                <div>
+                <TopBar title="Home" />
+                    { children }
+                </div>
+                <LeftPanel />
+            </main>
+        </> 
+
+    )
+
+}

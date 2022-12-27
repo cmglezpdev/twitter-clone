@@ -1,16 +1,14 @@
-import { Feed, LeftPanel, SideMenu, TopBar } from "../components";
-import { WriteTweetModal } from '../components/modals/WriteTweet';
+import { Feed } from "../components";
+import { AppLayout } from '../layouts';
 
 function HomePage() {
   return (
-    <div className="w-screen h-screen grid grid-cols-twitter">
-      <SideMenu />
-      <div>
-      <TopBar title="Home" />
-        <Feed />
-      </div>
-      <LeftPanel />
-    </div>
+    <AppLayout
+      title="Home / Twitter"
+      pageDescription="Twitter clone"
+    >
+      <Feed />
+    </AppLayout>
   )
 }
 
