@@ -6,6 +6,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useForm } from '../../hooks';
 import { validations as vdts } from '../../services';
 import { AuthLayout } from '../../layouts';
+import Link from 'next/link';
 
 interface FormData {
     name?: string;
@@ -125,6 +126,13 @@ const LoginPage = () => {
                         Sign in
                     </button>
                 </form>
+
+                <span className='mt-3 text-lg'>
+                    {`Don't have an account?`} 
+                    <Link href='/auth/register' className='inline-block ml-2 text-twitter-blue'>
+                        Sign up
+                    </Link>
+                </span>
             </div>
         </AuthLayout>
     )

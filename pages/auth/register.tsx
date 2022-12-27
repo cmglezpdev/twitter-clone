@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { BsTwitter } from 'react-icons/bs'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
@@ -146,6 +147,12 @@ const RegisterPage = () => {
                     </button>
                 </form>
 
+                <span className='mt-3 text-lg'>
+                    {`Have an account already?`} 
+                    <Link href='/auth/login' className='inline-block ml-2 text-twitter-blue'>
+                        Log in
+                    </Link>
+                </span>
             </div>
         </AuthLayout>
     )
