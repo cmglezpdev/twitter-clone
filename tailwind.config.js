@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
+    "./layouts/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -12,7 +13,7 @@ module.exports = {
         "modal": "#111111bd"
       },
       gridTemplateColumns: {
-        "twitter": "1.5fr 3fr 2fr",
+        "twitter": "1fr 2fr 1.5fr",
       },
       zIndex: {
         "inf": "999999"
