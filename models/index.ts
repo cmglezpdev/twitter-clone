@@ -1,2 +1,2 @@
-export * from './Tweet'
-export * from './User'
+export { default as Tweet } from './Tweet'
+export { default as User } from './User'
