@@ -10,6 +10,7 @@ const userSchema = new Schema({
     banner: {  type: String },
 
     tweets: { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
+    retweets: { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
 
     // ... other fields
     following: { type: [mongoose.Types.ObjectId], ref: 'User' },
