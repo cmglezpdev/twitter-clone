@@ -15,7 +15,7 @@ export const SideMenu = () => {
     const [openTweetModal, setOpenTweetModal] = useState(false);
 
     return (
-        <div className='w-full h-screen p-10'>
+        <div className='w-full h-screen p-10 px-5'>
             <Link href='/home'>
                 <div className='flex items-center my-2'>
                     <BsTwitter className='text-4xl text-twitter-blue mr-4' />

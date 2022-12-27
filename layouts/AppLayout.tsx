@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import Head from "next/head";
-import { LeftPanel, SideMenu, TopBar } from "../components";
+import { FooterAccount, LeftPanel, SideMenu, TopBar } from "../components";
 
 interface Props {
     title: string;
@@ -20,14 +20,16 @@ export const AppLayout:FC<Props> = ( props ) => {
                 <meta name='og:description' content={pageDescription} />
                 <title>{ title }</title>
             </Head>
-            <main className="w-screen h-screen grid grid-cols-twitter">
+
+            <div className="w-screen h-screen grid grid-cols-twitter">
                 <SideMenu />
                 <div>
-                <TopBar title="Home" />
+                    <TopBar title="Home" />
                     { children }
                 </div>
                 <LeftPanel />
-            </main>
+            </div>
+            {/* <FooterAccount /> */}
         </> 
 
     )
