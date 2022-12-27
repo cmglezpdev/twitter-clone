@@ -8,3 +8,18 @@ export const isValidEmail = (email: string): boolean => {
   
     return !!match;
 };
+
+
+export const isValidBirthday = (date: string) => {
+    const brithday = new Date(date);
+    const today = new Date( Date.now() );
+
+    return brithday <= today;
+}
+
+export const isValidPassword = (password: string) => {
+  if( password.trim().length < 8 ) return false;
+  // TODO: add more validations
+  return true;
+}
+
