@@ -10,6 +10,7 @@ export interface IUser {
     banner: string;
 
     tweets: string[];
+    retweets: string[];
 
     // ... other fields
     following: string[];
