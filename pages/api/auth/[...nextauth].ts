@@ -2,6 +2,8 @@ import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import Credentials from 'next-auth/providers/credentials';
 
+import { dbUsers } from '../../../database';
+
 export const authOptions = {
     providers: [
         Credentials({
@@ -12,11 +14,9 @@ export const authOptions = {
             },
 
             async authorize( credentials ) {
-                console.log({ credentials })
-
                 // TODO: Validate credentials with database
-
-                return { name: 'Juan', email: 'juan@gmial.com', password: '1235346457' }
+                const { email, password } = credentials!;
+                return await dbUsers.checkUserEmailAndPassword(email, password);
             }
         }),
         GithubProvider({
@@ -37,6 +37,8 @@ export const authOptions = {
 
                     case 'oauth':
                     // TODO: verificar in database
+                    
+                    console.log({ user, account })
                     break;
                 }
             }
