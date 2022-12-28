@@ -1,14 +1,16 @@
 import { FC, useState, useEffect } from 'react';
 import Image from "next/image"
+import useSWR from 'swr';
 
 import { CiViewBoard } from 'react-icons/ci'
 import { TbMessageCircle2 } from 'react-icons/tb'
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { IoShareOutline } from 'react-icons/io5'
 
-import { ITweet } from "../interfaces"
+import { twitterApi } from '../api';
+import { ITweet, IUser } from "../interfaces"
+
 import img from '../public/avatar.png'
-import useSWR from 'swr';
 
 interface Props {
     tweet: ITweet;
@@ -17,14 +19,22 @@ interface Props {
 export const Tweet:FC<Props> = ({ tweet }) => {
 
     const [tweetContent, setTweetContent] = useState<ITweet>(tweet);
-    const { _id, user, likes, retweets, comments, views, text } = tweetContent;
+    const [{ username, name }, setUser ] = useState<IUser>({} as IUser);
 
+    const { _id, user: userId, likes, retweets, comments, views, text } = tweetContent;
     const { data } = useSWR(`api/tweets/${_id}`, { refreshInterval: 10000 });
+
+    useEffect(() => {
+        twitterApi.get(`/users/${userId}`)
+            .then(({data}) => setUser(data));
+    }, [userId]);
 
     useEffect(() => {
         if( data )
             setTweetContent(data);
     }, [data])
+
+    if( !username || !tweet ) return <h1>Loading</h1>;
 
     return (
         <div className="w-full flex hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-50">
@@ -33,8 +43,8 @@ export const Tweet:FC<Props> = ({ tweet }) => {
             </div>
             <div className="p-2">
                 <p className="flex">
-                    <span className="mr-1 font-bold">{ user }</span>
-                    <span className="font-light">@cmglezpdev</span>
+                    <span className="mr-1 font-bold">{ name }</span>
+                    <span className="font-light">@{ username }</span>
                 </p>
                 <p>{ text }</p>
                 
