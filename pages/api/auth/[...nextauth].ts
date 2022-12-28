@@ -13,6 +13,7 @@ export const authOptions = {
                 password: { label: "Password", type: "password", placeholder: "Password" }
             },
 
+            // @ts-ignore
             async authorize( credentials ) {
                 // TODO: Validate credentials with database
                 const { email, password } = credentials!;
@@ -29,6 +30,12 @@ export const authOptions = {
     pages: {
         signIn: '/auth/login',
         newUser: '/auth/register'
+    },
+
+    session: {
+        maxAge: 2592000, // 30 days
+        updateAge: 86400, // 24 hours
+        strategy: 'jwt'
     },
 
     // Callbacks
@@ -61,4 +68,5 @@ export const authOptions = {
     }
 }
 
+// @ts-ignore
 export default NextAuth(authOptions);
