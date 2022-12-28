@@ -39,6 +39,7 @@ export const oAuthUser = async( oAuthEmail:string, oAuthName:string ) => {
         return { _id, name, username, email };
     }
 
+    // TODO: Verificar que no exista otro username igual
     const username = oAuthName.split('@')[0];
     const password = bcrypt.hashSync( username );
     const newUser = new User({ email: oAuthEmail, name: oAuthName, username, password });
