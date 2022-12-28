@@ -19,17 +19,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 async function createUser(req: NextApiRequest, res: NextApiResponse<Data>) {
-    const { name = '', email = '', username = '', password = '' } = req.body;
+    const { name = '', email = '', password = '' } = req.body;
 
     if( name.trim().length < 3 ) 
         return res.status(400).json({ message: 'Name must be at least 3 characters long' })
     if( !validations.isValidEmail(email) )
         return res.status(400).json({ message: 'Invalid email' })
-    if( username.trim().length < 3 )
-        return res.status(400).json({ message: 'Username must be at least 3 characters long' })
     if( password.trim().length < 8 )
         return res.status(400).json({ message: 'Password must be at least 8 characters long' })
-        
+    
+    // TODO: Verificar que no exista otro username igual
+    const username = email.split('@')[0];
+
     try {
         db.connect();
         
