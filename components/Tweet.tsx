@@ -36,6 +36,30 @@ export const Tweet:FC<Props> = ({ tweet }) => {
 
     if( !username || !tweet ) return <h1>Loading</h1>;
 
+
+    const onReaction = async( type: string ) => {
+        switch( type ) {
+            case 'like':
+                const { data: { likes } } = await twitterApi.put('/tweets/like', { tweetId: _id, userId });
+                setTweetContent({
+                    ...tweetContent,
+                    likes
+                })
+                break;
+
+            case 'retweet':
+                const{ data: { retweets } } = await twitterApi.put('/tweets/retweet', { tweetId: _id, userId });
+                setTweetContent({
+                    ...tweetContent,
+                    retweets
+                })
+                break;
+
+            default:
+                break;
+        }
+    }
+
     return (
         <div className="w-full flex hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-50">
             <div className="p-2">
@@ -62,17 +86,31 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                         <span>{ comments.length }</span>
                     </span>
 
-                    <span className="flex items-center mt-3 mr-10 text-gray-700 hover:text-green-600 group transition-colors">
+                    <span 
+                        className="flex items-center mt-3 mr-10 text-gray-700 hover:text-green-600 group transition-colors"
+                        onClick={() => onReaction('retweet')}
+                    >
                         <span className="group-hover:bg-green-200 rounded-full p-2">
-                            <AiOutlineRetweet className='text-xl font-light' />
+                            <AiOutlineRetweet 
+                                className='text-xl font-light' 
+                                style={{ color: retweets.includes(userId) ? 'green' : '' }}
+                            />
                         </span>
-                        <span>{ retweets.length }</span>
+                        <span style={{ color: retweets.includes(userId)? 'green' : '' }}>{ retweets.length }</span>
                     </span>
-                    <span className="flex items-center mt-3 mr-10 text-gray-700 hover:text-red-600 group transition-colors">
+
+                    <span 
+                        className="flex items-center mt-3 mr-10 text-gray-700 hover:text-red-600 group transition-colors"
+                        onClick={() => onReaction('like')}
+                    >
                         <span className="group-hover:bg-red-200 rounded-full p-2">
-                            <AiOutlineHeart className='text-xl font-light' />
+                            {
+                                likes.includes(userId)
+                                    ? ( <AiFillHeart className='text-xl font-light text-red-600' /> )
+                                    : ( <AiOutlineHeart className='text-xl font-light' /> )
+                            }
                         </span>
-                        <span>{ likes.length }</span>
+                        <span style={{ color: likes.includes(userId)? 'red' : '' }}>{ likes.length }</span>
                     </span>
 
                     <span className="hover:bg-blue-200 rounded-full p-2 mt-3 mr-10">
