@@ -28,3 +28,23 @@ export const checkUserEmailAndPassword = async ( email: string, password: string
         email,
     }
 }
+
+export const oAuthUser = async( oAuthEmail:string, oAuthName:string ) => {
+    await db.connect();
+
+    const user = await User.findOne({ email: oAuthEmail }).lean();
+    if( user ) {
+        await db.disconnect();
+        const { _id, name, username, email } = user;
+        return { _id, name, username, email };
+    }
+
+    const username = oAuthName.split('@')[0];
+    const password = bcrypt.hashSync( username );
+    const newUser = new User({ email: oAuthEmail, name: oAuthName, username, password });
+    await newUser.save();
+    db.disconnect();
+
+    const { _id, name, email } = newUser;
+    return { _id, name, username, email };
+}
