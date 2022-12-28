@@ -1,12 +1,13 @@
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import Link from 'next/link';
 import { BsTwitter } from 'react-icons/bs'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
 import { useForm } from '../../hooks';
 import { validations as vdts } from '../../services';
 import { AuthLayout } from '../../layouts';
-import Link from 'next/link';
+import { AuthContext } from '../../context/auth';
 
 interface FormData {
     name?: string;
@@ -18,13 +19,9 @@ interface FormData {
 const LoginPage = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const { logInUser } = useContext(AuthContext);
 
     const { handlerChange, values, errors } = useForm<FormData>({}, {
-        name: { 
-            required: true,
-            validate: (value: string) => (value.trim().length > 2),
-            messageError: 'The length name must be greater than 2 characters'
-        },
         email: {
             required: true,
             validate: (value: string) => vdts.isValidEmail(value),
@@ -38,8 +35,9 @@ const LoginPage = () => {
     });
 
     const onSubmit = (e:any) => {
-        e.preventDefault();
-        console.log(values);
+        e.preventDefault(); 
+        const { email = '', password = '' } = values;
+        logInUser(email, password);
     }
 
     return (
@@ -55,20 +53,6 @@ const LoginPage = () => {
                 <form
                     className='w-full mt-5 flex flex-col'
                 >
-                    <div className='w-full'>
-                        <input 
-                            className='w-full border-2 border-gray-300 rounded-md p-3 mt-2 text-xl outline-none focus:border-twitter-blue'
-                            type='text' 
-                            name='name' 
-                            placeholder='Name'
-                            onChange={handlerChange}
-                            style={ errors.name ? { borderColor: 'red' } : {} }
-                        />
-                        <span
-                            className='text-red-600 text-sm'
-                            style={{ display: errors.name ? 'block' : 'none' }}
-                        >{ errors.name }</span>
-                    </div>
 
                     <div className='w-full'>
                         <input 
