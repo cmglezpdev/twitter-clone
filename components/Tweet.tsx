@@ -67,7 +67,12 @@ export const Tweet:FC<Props> = ({ tweet }) => {
         <div className='w-full flex hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-200'>
             <div className='p-2'>
                 <Link href={`/${ username }`}>
-                    <Image src={img} alt='avatar' width={150} height={150} className='rounded-full' />
+                    <Image 
+                        src={img} alt='avatar' 
+                        width={50} height={50} 
+                        className='rounded-full' 
+                        style={{ minWidth: 50, minHeight: 50 }}
+                    />
                 </Link>
             </div>
             <div className='p-2'>

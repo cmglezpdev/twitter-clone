@@ -46,7 +46,12 @@ export const WriteTweetModal:FC<Props> = ({ open, closeModal }) => {
                 </div>
                 
                 <div className='w-[15%]'>
-                    <Image src={img} alt='avatar' width={70} height={70} className='rounded-full' />
+                    <Image 
+                        src={img} alt='avatar' 
+                        width={70} height={70} 
+                        className='rounded-full' 
+                        style={{ minWidth: 70, minHeight: 70 }}
+                    />
                 </div>
                 <div className='w-[85%]'>
                     <textarea
