@@ -36,7 +36,8 @@ export const authOptions = {
                         break;
 
                     case 'oauth':
-                    // TODO: verificar in database
+                        // TODO: Retornar tambien la foto del usuario
+                        token.user = await dbUsers.oAuthUser(user.email, user.name);
                     
                     console.log({ user, account })
                     break;
