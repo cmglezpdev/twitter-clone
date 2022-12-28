@@ -1,19 +1,22 @@
 
 
 export interface IUser {
-    _id: string;
-    name: string;
-    username: string;
-    email: string;
-    bibliography: string;
-    avatar: string;
-    banner: string;
+    _id          : string;
+    name         : string;
+    username     : string;
+    email        : string;
+    password?    : string;
+    bibliography : string;
+    avatar       : string;
+    banner       : string;
 
-    tweets: string[];
-    retweets: string[];
+    tweets       : string[];
+    retweets     : string[];
 
     // ... other fields
-    following: string[];
-    followers: string[];
-    joined: string;
+    following    : string[];
+    followers    : string[];
+    joined       : string;
+    createdAt?   : string;
+    updatedAt?   : string;
 }
