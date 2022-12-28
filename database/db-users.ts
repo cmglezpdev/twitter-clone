@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models';
 import { validations } from '../services';
-import { db } from '.'
+import { IUser } from '../interfaces';
+import { db } from './'
 
 
 export const checkUserEmailAndPassword = async ( email: string, password: string ) => {
@@ -48,4 +49,13 @@ export const oAuthUser = async( oAuthEmail:string, oAuthName:string ) => {
 
     const { _id, name, email } = newUser;
     return { _id, name, username, email };
+}
+
+export const getUsers = async ( conditions: any ): Promise<IUser[]> => {
+    
+    await db.connect();
+    const users = await User.find(conditions).lean();
+    await db.disconnect();
+
+    return JSON.parse(JSON.stringify(users));
 }
