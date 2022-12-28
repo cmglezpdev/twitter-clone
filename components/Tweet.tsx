@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useContext } from 'react';
 import Image from "next/image"
 import useSWR from 'swr';
 
@@ -9,6 +9,7 @@ import { IoShareOutline } from 'react-icons/io5'
 
 import { twitterApi } from '../api';
 import { ITweet, IUser } from "../interfaces"
+import { AuthContext } from '../context/auth';
 
 import img from '../public/avatar.png'
 
@@ -20,6 +21,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
 
     const [tweetContent, setTweetContent] = useState<ITweet>(tweet);
     const [{ username, name }, setUser ] = useState<IUser>({} as IUser);
+    const { user } = useContext(AuthContext);
 
     const { _id, user: userId, likes, retweets, comments, views, text } = tweetContent;
     const { data } = useSWR(`api/tweets/${_id}`, { refreshInterval: 10000 });
@@ -40,7 +42,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     const onReaction = async( type: string ) => {
         switch( type ) {
             case 'like':
-                const { data: { likes } } = await twitterApi.put('/tweets/like', { tweetId: _id, userId });
+                const { data: { likes } } = await twitterApi.put('/tweets/like', { tweetId: _id, userId: user?._id || '' });
                 setTweetContent({
                     ...tweetContent,
                     likes
@@ -48,7 +50,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                 break;
 
             case 'retweet':
-                const{ data: { retweets } } = await twitterApi.put('/tweets/retweet', { tweetId: _id, userId });
+                const{ data: { retweets } } = await twitterApi.put('/tweets/retweet', { tweetId: _id, userId: user?._id || '' });
                 setTweetContent({
                     ...tweetContent,
                     retweets
@@ -61,7 +63,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     }
 
     return (
-        <div className="w-full flex hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-50">
+        <div className="w-full flex hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-200">
             <div className="p-2">
                 <Image src={img} alt="avatar" width={150} height={150} className='rounded-full' />
             </div>
@@ -93,10 +95,10 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                         <span className="group-hover:bg-green-200 rounded-full p-2">
                             <AiOutlineRetweet 
                                 className='text-xl font-light' 
-                                style={{ color: retweets.includes(userId) ? 'green' : '' }}
+                                style={{ color: retweets.includes(user?._id || '') ? 'green' : '' }}
                             />
                         </span>
-                        <span style={{ color: retweets.includes(userId)? 'green' : '' }}>{ retweets.length }</span>
+                        <span style={{ color: retweets.includes(user?._id || '') ? 'green' : '' }}>{ retweets.length }</span>
                     </span>
 
                     <span 
@@ -105,12 +107,12 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                     >
                         <span className="group-hover:bg-red-200 rounded-full p-2">
                             {
-                                likes.includes(userId)
+                                likes.includes(user?._id || '')
                                     ? ( <AiFillHeart className='text-xl font-light text-red-600' /> )
                                     : ( <AiOutlineHeart className='text-xl font-light' /> )
                             }
                         </span>
-                        <span style={{ color: likes.includes(userId)? 'red' : '' }}>{ likes.length }</span>
+                        <span style={{ color: likes.includes(user?._id || '')? 'red' : '' }}>{ likes.length }</span>
                     </span>
 
                     <span className="hover:bg-blue-200 rounded-full p-2 mt-3 mr-10">
