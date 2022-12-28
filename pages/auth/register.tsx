@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 import { BsTwitter } from 'react-icons/bs'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
@@ -7,6 +7,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useForm } from '../../hooks';
 import { validations as vdts } from '../../services';
 import { AuthLayout } from '../../layouts';
+import { AuthContext } from '../../context/auth';
 
 interface FormData {
     name?: string;
@@ -18,6 +19,7 @@ interface FormData {
 const RegisterPage = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const { signUpUser } = useContext(AuthContext);
 
     const { handlerChange, values, errors } = useForm<FormData>({}, {
         name: { 
@@ -42,9 +44,13 @@ const RegisterPage = () => {
         }
     });
 
-    const onSubmit = (e:any) => {
+    const onSubmit = async (e:any) => {
         e.preventDefault();
-        console.log(values);
+        try {
+            await signUpUser(values);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
