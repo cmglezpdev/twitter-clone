@@ -2,20 +2,20 @@ import mongoose, { Schema, Model, model } from 'mongoose';
 import { IUser } from '../interfaces';
 
 const userSchema = new Schema({
-    name: { type: String, required: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    bibliography: { type: String },
-    avatar: { type: String },
-    banner: {  type: String },
+    name        : { type: String, required: true },
+    username    : { type: String, required: true, unique: true },
+    password    : { type: String, required: true },
+    email       : { type: String, required: true, unique: true },
+    bio         : { type: String },
+    avatar      : { type: String },
+    banner      : {  type: String },
 
-    tweets: { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
-    retweets: { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
+    tweets      : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
+    retweets    : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
 
     // ... other fields
-    following: { type: [mongoose.Types.ObjectId], ref: 'User' },
-    followers: { type: [mongoose.Types.ObjectId], ref: 'User' },
+    following   : { type: [mongoose.Types.ObjectId], ref: 'User' },
+    followers   : { type: [mongoose.Types.ObjectId], ref: 'User' },
 }, {
     timestamps: true
 })

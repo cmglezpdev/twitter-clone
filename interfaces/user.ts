@@ -6,7 +6,7 @@ export interface IUser {
     username     : string;
     email        : string;
     password?    : string;
-    bibliography : string;
+    bio          : string;
     avatar       : string;
     banner       : string;
 
