@@ -1,9 +1,10 @@
 import { useEffect, useReducer, FC, ReactNode } from 'react';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 import { authReducer } from './authReducer';
 import { AuthContext } from './AuthContext';
 import { IUser } from '../../interfaces';
+import { twitterApi } from '../../api';
 
 export interface IAuthState {
     isLogged: boolean;
@@ -23,17 +24,34 @@ export const AuthProvider:FC<{ children: ReactNode }> = ({ children }) => {
 
 
     useEffect(() => {
-
         if( status === 'authenticated' ) {
             dispatch({ type: '[auth] - login', payload: data?.user as IUser })
         }
-
     }, [status, data])
+
+    const logInUser = (email: string, password: string) => {
+        signIn('credentials', { email, password, callbackUrl: '/' })
+    }
+
+    const signUpUser = async ( credentials: any ) => {
+        const { email = '', password = '' } = credentials;
+
+        try {
+            await twitterApi.post('/users/create', credentials);
+            logInUser(email, password);
+        } catch (error) {
+            console.log(error);            
+        }
+    }
 
     return (
         <AuthContext.Provider
             value={{
-                ...state
+                ...state,
+
+                // methods
+                logInUser,
+                signUpUser
             }}
         >
             { children }
