@@ -1,15 +1,14 @@
-import { FC, MouseEvent, useRef } from 'react';
+import { FC, MouseEvent, useRef, useContext } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-
 import { IoMdClose } from 'react-icons/io'
 
 import { useForm } from '../../hooks';
 import { IUser } from '../../interfaces';
 import { validations } from '../../services';
+import { UserContext } from '../../context/user';
+import { twitterApi } from '../../api';
 
 import img from '../../public/avatar.png'
-import { twitterApi } from '../../api';
 
 interface Props {
     user: IUser;
@@ -27,7 +26,7 @@ interface INITIAL_VALUES {
 
 export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
 
-    const router = useRouter();
+    const { setProfileUser } = useContext(UserContext);
     const { name = '', bio = '', location = '', website = '', birth = '' } = user;
     const { handlerChange, values, errors } = useForm<INITIAL_VALUES>({
         name, bio, location, website, birth
@@ -67,10 +66,10 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
 
     const onSaveSettings = async (e:any) => {
         e.preventDefault();
-        const newUser = await twitterApi.put(`/users/${user._id}`, values);
-        console.log(newUser);
+        await twitterApi.put(`/users/${user._id}`, values);
+        setProfileUser(user._id);
         // TODO: sera necesario actualizar el auth context?
-        router.reload();
+        // router.reload();
         closeModal();
     }
 
