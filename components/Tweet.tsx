@@ -83,7 +83,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                     </p>
                 </Link>
 
-                <p>{ text }</p>
+                <p className='whitespace-pre-line'>{ text }</p>
                 
                 <div className='flex justify-start'>
                     <span className='flex items-center mt-3 mr-10 text-gray-700 hover:text-blue-600 group transition-colors'>
