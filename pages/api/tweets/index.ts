@@ -21,7 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 async function getTweets(req: NextApiRequest, res: NextApiResponse<Data>) {
     try {
         db.connect();
-        const tweets = await Tweet.find().lean();
+        const tweets = await Tweet.find().sort('-updatedAt').lean();
         db.disconnect();
         
         return res.status(200).json(tweets);
