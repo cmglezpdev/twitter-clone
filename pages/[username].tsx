@@ -28,7 +28,7 @@ const ProfilePage:NextPage<Props> = ({ user }) => {
             title={`${name} (${username}) / Twitter`}
             pageDescription={ !bio ? `Profile of ${name} (${username})` : bio }
         >
-            <header className='mt-[70px]'>
+            <header className='mt-[70px] min-w-[530px]'>
                 <div className='relative'>
                     <div className='w-full h-[200px] bg-gray-500'>
                         {/* image without banner */}
