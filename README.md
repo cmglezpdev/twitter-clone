@@ -42,3 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - [ ] Al crear una cuenta con una red social, ir a otra pantalla para poner la contraseña
 - [ ] Crear una pantalla solo con redes sociales para logearse
 - [ ] Manejar errores de login y registro devueltas por la api
+- [ ] Cambiar las partes del loading por un spinner
+- [ ] Mostrar contador en los inputs con la cantidad de caracteres disponibles
+- [ ] Agregar otro modal para preguntar si el usuario quiere aceptar alguna accion
+- [ ] Eliminar de los endpoints la propiedad userId, ya que esta aparece en las cookies
