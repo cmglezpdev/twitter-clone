@@ -51,7 +51,7 @@ const ProfilePage:NextPage<Props> = ({ user }) => {
                     <div className='flex flex-col text-lg'>
                         <span className='font-bold text-xl'>{ name }</span>
                         <span className='text-gray-700'>@{ username }</span>
-                        <p className='mt-3'>
+                        <p className='mt-3 whitespace-pre-line'>
                             { bio }
                         </p>
                     </div>
@@ -70,7 +70,7 @@ const ProfilePage:NextPage<Props> = ({ user }) => {
                         style={{ display: website ? 'flex' : 'none' }}
                     >
                         <AiOutlineLink className='text-lg text-gray-900' />
-                        <Link href={website!} target='_blank' className='text-lg text-twitter-blue hover:underline'>{ website }</Link>
+                        <Link href={website || ''} target='_blank' className='text-lg text-twitter-blue hover:underline'>{ website }</Link>
                     </div>
                     <div
                         className='flex items-center gap-x-1'
@@ -108,9 +108,11 @@ export default ProfilePage;
 
 
 
+
+// TODO: ARREGLAR EL NULL DE AQUI
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
     const users = await dbUsers.getUsers({});
-    console.log(users);
+    
     const paths = users.map(({ username }) => ({
         params: { username }
     }))
