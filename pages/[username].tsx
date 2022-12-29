@@ -15,17 +15,24 @@ interface Props {
 const ProfilePage:NextPage<Props> = ({ user: ProfileUser }) => {
     
     const [user, setUser] = useState<IUser>(ProfileUser)
-    const { profileUser, setProfileUser } = useContext(UserContext);
+    const { profileUser, setProfileUser, deleteProfileUser } = useContext(UserContext);
     const { name, username, bio } = user;
 
     useEffect(() => {
-        if( !profileUser )
+        if( !profileUser ) { // si no he cargado todavia el usuario en el context
             setProfileUser(user._id);
-        else
-        if( profileUser )
-            setUser(profileUser)
-    }, [ profileUser, setProfileUser, user._id ])
+            return;
+        }
+        if( user._id !== ProfileUser._id ) { // si cambie de un perfil a otro
+            setUser(ProfileUser);
+            setProfileUser(ProfileUser._id)
+            return;
+        }
+        setUser(profileUser);
 
+        return () => deleteProfileUser()
+
+    }, [ProfileUser, profileUser, setProfileUser, deleteProfileUser, user._id])
 
     return (
         <AppLayout
@@ -41,9 +48,6 @@ const ProfilePage:NextPage<Props> = ({ user: ProfileUser }) => {
 export default ProfilePage;
 
 
-
-
-// TODO: ARREGLAR EL NULL DE AQUI
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
     const users = await dbUsers.getUsers({});
     

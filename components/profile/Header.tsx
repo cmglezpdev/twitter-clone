@@ -15,7 +15,7 @@ interface Props {
 
 
 export const Header:FC<Props> = ({ user }) => {
-    
+
     const [showSettingsProfile, setShowSettingsProfile] = useState(false);
     const { name, username, bio, followers, following, location, website } = user;
 
@@ -77,7 +77,6 @@ export const Header:FC<Props> = ({ user }) => {
             <ProfileSettingsModal 
                 open={showSettingsProfile}
                 closeModal={() => setShowSettingsProfile(false)}
-                user={user}
             />
 
         </>

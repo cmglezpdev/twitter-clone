@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useRef, useContext } from 'react';
+import { FC, MouseEvent, useRef, useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { IoMdClose } from 'react-icons/io'
 
@@ -11,7 +11,6 @@ import { twitterApi } from '../../api';
 import img from '../../public/avatar.png'
 
 interface Props {
-    user: IUser;
     open: boolean;
     closeModal: () => void;
 }
@@ -24,12 +23,15 @@ interface INITIAL_VALUES {
     birth    : string;
 }
 
-export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
+export const ProfileSettingsModal:FC<Props> = ({ open, closeModal }) => {
 
-    const { setProfileUser } = useContext(UserContext);
-    const { name = '', bio = '', location = '', website = '', birth = '' } = user;
-    const { handlerChange, values, errors } = useForm<INITIAL_VALUES>({
-        name, bio, location, website, birth
+    const { setProfileUser, setUser, user } = useContext(UserContext);
+    const { handlerChange, values, errors, setInitialValues } = useForm<INITIAL_VALUES>({
+        name: user?.name || '', 
+        bio: user?.bio || '', 
+        location: user?.location || '', 
+        website: user?.website || '', 
+        birth: user?.birth || '',
     }, {
         name: { 
             required: true,
@@ -52,9 +54,19 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
             required: true,
             validate: (value: string) => validations.isValidBirthday(value),
             messageError: 'The birth is not valid'
-        },
-        
+        },        
     });
+
+    useEffect(() => {
+        if( user )
+            setInitialValues({
+                name: user?.name || '', 
+                bio: user?.bio || '', 
+                location: user?.location || '', 
+                website: user?.website || '', 
+                birth: user?.birth || '',
+            });
+    }, [setInitialValues, user])
 
 
     const bgModal = useRef<HTMLDivElement>(null);
@@ -66,10 +78,9 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
 
     const onSaveSettings = async (e:any) => {
         e.preventDefault();
-        await twitterApi.put(`/users/${user._id}`, values);
-        setProfileUser(user._id);
-        // TODO: sera necesario actualizar el auth context?
-        // router.reload();
+        await twitterApi.put(`/users/${user!._id}`, values);
+        setProfileUser(user!._id);
+        setUser(user!._id);
         closeModal();
     }
 
@@ -157,12 +168,13 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
                             <input 
                                 className='w-full border-2 border-gray-300 rounded-md p-3 mt-2 text-xl outline-none focus:border-twitter-blue'
                                 type='text' 
-                                name='website' 
+                                name='website'
                                 placeholder='Website'
                                 onChange={handlerChange}
                                 defaultValue={values.website}
                                 style={ errors.website ? { borderColor: 'red' } : {} }
                             />
+                            <span>{JSON.stringify(user)}</span>
                             <span
                                 className='text-red-600 text-sm'
                                 style={{ display: errors.website ? 'block' : 'none' }}
