@@ -6,7 +6,6 @@ import { User } from '../../../../models';
 
 type Data = 
     | { message: string }
-    | IUser
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     
@@ -44,9 +43,6 @@ async function followUser(req: NextApiRequest, res: NextApiResponse<Data>) {
         
         const userLoggedId = JSON.parse(JSON.stringify(userlogged._id));
         const userToFollowId = JSON.parse(JSON.stringify(userToFollow._id));
-
-        console.log({ userLoggedId, userToFollowId })
-        console.log({ userlogged, userToFollow })
 
         if( userlogged.following.includes( userToFollowId ) ) {
             userlogged.following = userlogged.following.filter( id => JSON.parse(JSON.stringify(id)) !== userToFollowId );

@@ -42,8 +42,6 @@ async function likeTweet(req: NextApiRequest, res: NextApiResponse<Data>) {
                 ? tweet.likes.filter(id => JSON.parse(JSON.stringify(id)) !== userId)
                 : tweet.likes.concat(userId);
 
-        console.log(tweet.likes)
-
         await tweet.save();
         db.disconnect();
         return res.status(200).json( tweet );
