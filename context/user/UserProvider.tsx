@@ -3,7 +3,6 @@ import { useReducer, FC, ReactNode, useCallback } from 'react';
 import { userReducer } from './userReducer';
 import { UserContext } from './UserContext';
 import { IUser } from '../../interfaces';
-import { dbUsers } from '../../database';
 import { twitterApi } from '../../api/twitterApi';
 
 export interface IUserState {

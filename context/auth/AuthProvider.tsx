@@ -1,4 +1,4 @@
-import { useEffect, useReducer, FC, ReactNode, useContext } from 'react';
+import { useEffect, useReducer, FC, ReactNode, useContext, useCallback } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { UserContext } from '../user';
@@ -31,11 +31,11 @@ export const AuthProvider:FC<{ children: ReactNode }> = ({ children }) => {
         }
     }, [status, data, setUser])
 
-    const logInUser = (email: string, password: string) => {
+    const logInUser = useCallback( (email: string, password: string) => {
         signIn('credentials', { email, password, callbackUrl: '/' })
-    }
+    }, [])
 
-    const signUpUser = async ( credentials: any ) => {
+    const signUpUser = useCallback( async ( credentials: any ) => {
         const { email = '', password = '' } = credentials;
 
         try {
@@ -45,12 +45,12 @@ export const AuthProvider:FC<{ children: ReactNode }> = ({ children }) => {
         } catch (error) {
             console.log(error);            
         }
-    }
+    }, [deleteUser, logInUser])
 
-    const logOutUser = () => {
+    const logOutUser = useCallback( () => {
         dispatch({ type: '[auth] - logout' });
         signOut({ callbackUrl: '/auth/login' });
-    }
+    }, [])
 
     return (
         <AuthContext.Provider
