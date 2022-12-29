@@ -16,8 +16,9 @@ import img from '../public/avatar.png';
 export const SideMenu = () => {
 
     const [openTweetModal, setOpenTweetModal] = useState(false);
-    const { user } = useContext(AuthContext);
+    const { user, logOutUser } = useContext(AuthContext);
     const [openMiniModal, setOpenMiniModal] = useState(false);
+
 
     return (
         <div className='w-full h-screen p-10 px-5'>
@@ -85,11 +86,14 @@ export const SideMenu = () => {
                 open={openMiniModal}
                 closeModal={() => setOpenMiniModal(false)}
             >
-                <div className='py-5 px-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative top-[320px] left-36'>
+                <button 
+                    className='py-5 px-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative top-[320px] left-36'
+                    onClick={logOutUser}
+                >
                     <span 
                         className='font-bold p-2 hover:bg-gray-100 cursor-pointer block w-full'
                     >Log out @{user?.username}</span>
-                </div>
+                </button>
             </BasicModal>
 
 

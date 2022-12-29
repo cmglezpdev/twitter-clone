@@ -9,6 +9,7 @@ export interface IAuthConext {
     // methods
     logInUser: (email: string, password: string) => void;
     signUpUser: (credentials: any) => Promise<void>;
+    logOutUser: () => void;
 }
 
 

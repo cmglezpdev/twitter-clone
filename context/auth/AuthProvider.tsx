@@ -1,5 +1,5 @@
 import { useEffect, useReducer, FC, ReactNode } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { authReducer } from './authReducer';
 import { AuthContext } from './AuthContext';
@@ -44,6 +44,11 @@ export const AuthProvider:FC<{ children: ReactNode }> = ({ children }) => {
         }
     }
 
+    const logOutUser = () => {
+        dispatch({ type: '[auth] - logout' });
+        signOut({ callbackUrl: '/auth/login' });
+    }
+
     return (
         <AuthContext.Provider
             value={{
@@ -51,7 +56,8 @@ export const AuthProvider:FC<{ children: ReactNode }> = ({ children }) => {
 
                 // methods
                 logInUser,
-                signUpUser
+                signUpUser,
+                logOutUser
             }}
         >
             { children }
