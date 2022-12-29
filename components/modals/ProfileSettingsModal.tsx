@@ -1,5 +1,6 @@
 import { FC, MouseEvent, useRef } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { IoMdClose } from 'react-icons/io'
 
@@ -26,6 +27,7 @@ interface INITIAL_VALUES {
 
 export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
 
+    const router = useRouter();
     const { name = '', bio = '', location = '', website = '', birth = '' } = user;
     const { handlerChange, values, errors } = useForm<INITIAL_VALUES>({
         name, bio, location, website, birth
@@ -68,6 +70,7 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal, user }) => {
         const newUser = await twitterApi.put(`/users/${user._id}`, values);
         console.log(newUser);
         // TODO: sera necesario actualizar el auth context?
+        router.reload();
         closeModal();
     }
 
