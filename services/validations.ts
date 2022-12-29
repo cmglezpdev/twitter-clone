@@ -11,10 +11,12 @@ export const isValidEmail = (email: string): boolean => {
 
 
 export const isValidBirthday = (date: string) => {
-    const brithday = new Date(date);
-    const today = new Date( Date.now() );
+    // const brithday = new Date(date);
+    // const today = new Date( Date.now() );
+    // return brithday <= today;
 
-    return brithday <= today;
+  // TODO: fix this
+  return true;
 }
 
 export const isValidPassword = (password: string) => {
@@ -23,3 +25,19 @@ export const isValidPassword = (password: string) => {
   return true;
 }
 
+export const isValidName = (name: string) => {
+  return name.trim().length > 0 && name.trim().length <= 50;
+}
+
+export const isValidBio = (bio: string) => {
+  return bio.trim().length > 0 && bio.trim().length <= 160;
+}
+
+export const isValidLocation = (location: string) => {
+  return location.trim().length > 0 && location.trim().length <= 30;
+}
+
+export const isValidWebsite = (website: string) => {
+  // TODO: Add more validations
+  return website.trim().length > 0 && website.trim().length <= 100;
+}
