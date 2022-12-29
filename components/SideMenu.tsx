@@ -1,12 +1,18 @@
-import { useState, useContext, MouseEvent } from 'react';
+import { useState, useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 
-import { AiFillHome, AiOutlineDown } from 'react-icons/ai';
-import { IoIosNotifications } from 'react-icons/io';
-import { CgProfile } from 'react-icons/cg'
+import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 import { FaHashtag } from 'react-icons/fa'
+import { HiHashtag } from 'react-icons/hi'
+import { IoIosNotifications } from 'react-icons/io';
+import { IoNotificationsOutline } from 'react-icons/io5';
+import { BsPersonCircle } from 'react-icons/bs'
+import { CgProfile } from 'react-icons/cg'
+
 import { BsTwitter } from 'react-icons/bs'
+import {  AiOutlineDown } from 'react-icons/ai';
 import { FiFeather } from 'react-icons/fi'
 
 import { WriteTweetModal, BasicModal } from './modals';
@@ -16,10 +22,10 @@ import img from '../public/avatar.png';
 
 export const SideMenu = () => {
 
+    const { pathname } = useRouter();
     const [openTweetModal, setOpenTweetModal] = useState(false);
     const { user, logOutUser } = useContext(AuthContext);
     const [openMiniModal, setOpenMiniModal] = useState(false);
-
 
     return (
         <div className='w-24 lg:w-full h-screen p-10 px-5'>
@@ -32,25 +38,32 @@ export const SideMenu = () => {
 
             <Link href='/home'>
                 <div className='flex rounded-full p-3 cursor-pointer hover:bg-gray-200'>
-                    <AiFillHome className='text-3xl' />
+                    <AiOutlineHome style={{ display: pathname !== '/home' ? 'block' : 'none' }} className='text-3xl' />
+                    <AiFillHome style={{ display: pathname === '/home' ? 'block' : 'none' }} className='text-3xl' />
                     <span className='px-2 text-xl hidden lg:block'>Home</span>
                 </div>
             </Link>
+
             <Link href='/explore'>
                 <div className='flex rounded-full p-3 cursor-pointer hover:bg-gray-200'>
-                    <FaHashtag className='text-3xl' />
+                    <HiHashtag style={{ display: pathname !== '/explore' ? 'block' : 'none' }} className='text-3xl' />
+                    <FaHashtag style={{ display: pathname === '/explore' ? 'block' : 'none' }} className='text-3xl' />
                     <span className='px-2 text-xl hidden lg:block'>Explore</span>
                 </div>
             </Link>
+
             <Link href='/notifications'>
                 <div className='flex rounded-full p-3 cursor-pointer hover:bg-gray-200'>
-                    <IoIosNotifications className='text-3xl' />
+                    <IoNotificationsOutline style={{ display: pathname !== '/notifications' ? 'block' : 'none' }} className='text-3xl' />
+                    <IoIosNotifications style={{ display: pathname === '/notifications' ? 'block' : 'none' }} className='text-3xl' />
                     <span className='px-2 text-xl hidden lg:block'>Notifications</span>
                 </div>
             </Link>
+
             <Link href={`/${user?.username || ''}`}>
                 <div className='flex rounded-full p-3 cursor-pointer hover:bg-gray-200'>
-                    <CgProfile className='text-3xl' />
+                    <CgProfile style={{ display: pathname !== '/[username]' ? 'block' : 'none' }} className='text-3xl' />
+                    <BsPersonCircle style={{ display: pathname === '/[username]' ? 'block' : 'none' }} className='text-3xl' />
                     <span className='px-2 text-xl hidden lg:block'>Profile</span>
                 </div>
             </Link>
