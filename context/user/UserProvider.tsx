@@ -1,4 +1,4 @@
-import { useReducer, FC, ReactNode } from 'react';
+import { useReducer, FC, ReactNode, useCallback } from 'react';
 
 import { userReducer } from './userReducer';
 import { UserContext } from './UserContext';
@@ -7,19 +7,20 @@ import { dbUsers } from '../../database';
 import { twitterApi } from '../../api/twitterApi';
 
 export interface IUserState {
-    user?: IUser
+    user?: IUser;
+    profileUser?: IUser;
 }
 
 const INITIAL_STATE: IUserState = {
-    user: undefined
+    user: undefined,
+    profileUser: undefined,
 }
 
 export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
 
     const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
 
-    const setUser = (id: string) => {
-
+    const setUser = useCallback( (id: string) => {
         twitterApi.get(`/users/${id}`)
             .then(({data: user}) => {
                 if( !user ) return null;
@@ -27,12 +28,23 @@ export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
             }).catch(error => {
                 console.log(error);
             })
-    }
+    }, [])
 
-    const deleteUser = () => dispatch({ type: '[User] - delete User' });
-
-
-
+    const deleteUser = useCallback( () => dispatch({ type: '[User] - delete User' }), []);
+    
+    const setProfileUser = useCallback( (id: string) => {
+        twitterApi.get(`/users/${id}`)
+        .then(({data: user}) => {
+            if( !user ) return null;
+            dispatch({ type: '[User] - set Profile User', payload: user });
+        }).catch(error => {
+            console.log(error);
+        })
+    }, [])
+    
+    const deleteProfileUser = useCallback(() => dispatch({ type: '[User] - delete profile User' }), []);
+    
+    
     return (
         <UserContext.Provider
             value={{
@@ -41,6 +53,8 @@ export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
                 // methods
                 setUser,
                 deleteUser,
+                setProfileUser,
+                deleteProfileUser,
             }}
         >
             { children }
