@@ -8,7 +8,10 @@ const userSchema = new Schema({
     email       : { type: String, required: true, unique: true },
     bio         : { type: String },
     avatar      : { type: String },
-    banner      : {  type: String },
+    banner      : { type: String },
+    location    : { type: String },
+    website     : { type: String },
+    birth       : { type: String },
 
     tweets      : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
     retweets    : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
