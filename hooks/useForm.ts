@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 
 export interface IValidate {
     [key: string]: {
@@ -18,7 +18,7 @@ export function useForm<Type> ( initialState: Type | any, validations: IValidate
     const [values, setValues] = useState<Type>(initialState)
     const [errors, setErrors] = useState<IError>({})
     
-    const handlerChange = (e: any) => {
+    const handlerChange = useCallback( (e: any) => {
         const { name, value } = e.target as { name: string, value: string };
         const newValues = {
             ...values,
@@ -44,11 +44,14 @@ export function useForm<Type> ( initialState: Type | any, validations: IValidate
 
         setValues(newValues);
         setErrors(newErrors);
-    }
+    }, [validations, values])
+
+    const setInitialValues = useCallback(( values: Type ) => setValues(values), []);
 
     return {
         handlerChange,
         validations,
+        setInitialValues,
         values,
         errors
     }
