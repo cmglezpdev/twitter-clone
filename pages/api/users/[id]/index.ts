@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { db } from '../../../database';
-import { IUser } from '../../../interfaces';
-import { User } from '../../../models';
-import { validations } from '../../../services';
+import { db } from '../../../../database';
+import { IUser } from '../../../../interfaces';
+import { User } from '../../../../models';
+import { validations } from '../../../../services';
 
 type Data = 
     | { message: string }
