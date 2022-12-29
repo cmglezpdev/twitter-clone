@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 import { FaHashtag } from 'react-icons/fa'
-import { HiHashtag } from 'react-icons/hi'
+import { HiOutlineHashtag } from 'react-icons/hi'
 import { IoIosNotifications } from 'react-icons/io';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { BsPersonCircle } from 'react-icons/bs'
@@ -46,7 +46,7 @@ export const SideMenu = () => {
 
             <Link href='/explore'>
                 <div className='flex rounded-full p-3 cursor-pointer hover:bg-gray-200'>
-                    <HiHashtag style={{ display: pathname !== '/explore' ? 'block' : 'none' }} className='text-3xl' />
+                    <HiOutlineHashtag style={{ display: pathname !== '/explore' ? 'block' : 'none' }} className='text-3xl' />
                     <FaHashtag style={{ display: pathname === '/explore' ? 'block' : 'none' }} className='text-3xl' />
                     <span className='px-2 text-xl hidden lg:block'>Explore</span>
                 </div>

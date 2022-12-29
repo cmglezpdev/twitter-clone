@@ -25,7 +25,7 @@ export const AppLayout:FC<Props> = ( props ) => {
 
             <div className="w-screen h-screen grid grid-cols-twitter">
                 <SideMenu />
-                <div>
+                <div className='border-x-2 border-gray-200'>
                     <TopBar title="Home" />
                     { children }
                 </div>
