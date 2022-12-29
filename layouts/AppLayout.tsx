@@ -1,6 +1,7 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useContext } from 'react';
 import Head from "next/head";
 import { FooterAccount, LeftPanel, SideMenu, TopBar } from "../components";
+import { AuthContext } from '../context/auth';
 
 interface Props {
     title: string;
@@ -9,8 +10,9 @@ interface Props {
 }
 
 export const AppLayout:FC<Props> = ( props ) => {
-
     const { title, pageDescription, children } = props;
+
+    const { user } = useContext(AuthContext);
 
     return (
         <>
@@ -29,7 +31,9 @@ export const AppLayout:FC<Props> = ( props ) => {
                 </div>
                 <LeftPanel />
             </div>
-            {/* <FooterAccount /> */}
+            {
+              !user && <FooterAccount />
+            }
         </> 
 
     )

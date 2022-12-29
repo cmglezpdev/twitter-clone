@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 export const FooterAccount = () => {
     return (
@@ -11,17 +12,21 @@ export const FooterAccount = () => {
 
             <div className='w-1/2 flex items-center justify-end'>
                 <div className='mr-16'>
-                    <button
-                        className='py-1 px-4 text-lg font-bold text-white bg-twitter-blue border-2 border-white rounded-full outline-none hover:bg-blue-400 transition-colors'
-                    >
-                        Log in
-                    </button>
+                    <Link href={'/auth/login'}>
+                        <button
+                            className='py-1 px-4 text-lg font-bold text-white bg-twitter-blue border-2 border-white rounded-full outline-none hover:bg-blue-400 transition-colors'
+                        >
+                            Log in
+                        </button>
+                    </Link>
                     
-                    <button
-                        className='py-1 px-4 text-lg font-bold bg-white rounded-full outline-none ml-4 border-2 border-white hover:bg-gray-200 transition-colors'
-                    >
-                        Sign up
-                    </button>
+                    <Link href={'/auth/register'}>
+                        <button
+                            className='py-1 px-4 text-lg font-bold bg-white rounded-full outline-none ml-4 border-2 border-white hover:bg-gray-200 transition-colors'
+                        >
+                            Sign up
+                        </button>
+                    </Link>
                 </div>
             </div>
         </footer>
