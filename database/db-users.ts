@@ -55,6 +55,12 @@ export const getUsers = async ( conditions: any ): Promise<IUser[]> => {
     
     await db.connect();
     const users = await User.find(conditions).lean();
+    if( !users ) return [];
+    
+    for( const user of users ) {
+        delete user.password;
+    }
+
     await db.disconnect();
 
     return JSON.parse(JSON.stringify(users));
