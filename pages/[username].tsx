@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { GetStaticProps, GetStaticPaths, NextPage } from 'next'
 import Image from 'next/image';
 
 import { AppLayout } from '../layouts';
 import { dbUsers } from '../database';
 import { IUser } from '../interfaces';
+import { ProfileSettingsModal } from '../components/modals';
 
 import img from '../public/avatar.png'
 
@@ -14,9 +16,8 @@ interface Props {
 
 const ProfilePage:NextPage<Props> = ({ user }) => {
     
-    console.log({ user });
+    const [showSettingsProfile, setShowSettingsProfile] = useState(false);
     const { name, username, bio, followers, following } = user;
-
 
     return (
         <AppLayout
@@ -33,7 +34,10 @@ const ProfilePage:NextPage<Props> = ({ user }) => {
                        <Image src={img} alt='avatar' className='rounded-full w-full h-full' />
                     </div>
                     <div className='flex w-full justify-end mt-3'>
-                        <button className='border-gray-400 hover:bg-gray-200 transition-colors border-2 text-lg font-bold py-2 px-4 rounded-full'>
+                        <button 
+                            className='border-gray-400 hover:bg-gray-200 transition-colors border-2 text-lg font-bold py-2 px-4 rounded-full'
+                            onClick={() => setShowSettingsProfile(true)}
+                        >
                             Edit Profile
                         </button>
                     </div>
@@ -61,6 +65,12 @@ const ProfilePage:NextPage<Props> = ({ user }) => {
                 </div>
 
             </header>
+
+            <ProfileSettingsModal 
+                open={showSettingsProfile}
+                closeModal={() => setShowSettingsProfile(false)}
+                user={user}
+            />
 
         </AppLayout>
     )
