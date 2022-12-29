@@ -21,8 +21,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 async function getTweet(req: NextApiRequest, res: NextApiResponse<Data>) {
     
     const { id } = req.query;
-    console.log(id);
-
     try {
         db.connect();
         const tweet = await Tweet.findById(id).lean();

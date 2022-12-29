@@ -32,7 +32,8 @@ async function getUser(req: NextApiRequest, res: NextApiResponse<Data>) {
         
         if( !user ) 
             return res.status(404).json({ message: 'User not found' })
-
+        
+        delete user.password;
         return res.status(200).json(user);
     } catch (error) {
         console.log(error);
@@ -67,6 +68,7 @@ async function updateUser(req: NextApiRequest, res: NextApiResponse<Data>) {
         if( !user )
             return res.status(400).json({ message: 'User no found' });
 
+        delete user.password;
         db.disconnect();
         return res.status(200).json(user)
     } catch (error) {
