@@ -1,0 +1,25 @@
+import { IUser } from '../../interfaces';
+import { IUserState } from './UserProvider';
+
+type UserAction = 
+    | { type: '[User] - set User', payload: IUser }
+    | { type: '[User] - delete User' }
+
+export const userReducer = ( state: IUserState, action: UserAction ) => {
+    switch( action.type ) {
+        case '[User] - set User':
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case '[User] - delete User':
+            return {
+                ...state,
+                user: undefined
+            }
+        
+        default:
+            return state;
+    }
+}
