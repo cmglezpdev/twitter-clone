@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { GetStaticProps, GetStaticPaths, NextPage } from 'next'
 import Image from 'next/image';
 
+import { CiLocationOn } from 'react-icons/ci';
+import { AiOutlineLink, AiOutlineSchedule } from 'react-icons/ai';
+
 import { AppLayout } from '../layouts';
 import { dbUsers } from '../database';
 import { IUser } from '../interfaces';
 import { ProfileSettingsModal } from '../components/modals';
 
 import img from '../public/avatar.png'
+import Link from 'next/link';
 
 interface Props {
     user: IUser;
@@ -17,7 +21,7 @@ interface Props {
 const ProfilePage:NextPage<Props> = ({ user }) => {
     
     const [showSettingsProfile, setShowSettingsProfile] = useState(false);
-    const { name, username, bio, followers, following } = user;
+    const { name, username, bio, followers, following, location, website } = user;
 
     return (
         <AppLayout
@@ -50,6 +54,30 @@ const ProfilePage:NextPage<Props> = ({ user }) => {
                         <p className='mt-3'>
                             { bio }
                         </p>
+                    </div>
+                </div>
+
+                <div className='flex gap-x-6 flex-wrap'>
+                    <div
+                        className='flex items-center gap-x-1'
+                        style={{ display: location ? 'flex' : 'none' }}
+                    >
+                        <CiLocationOn className='text-lg text-gray-900' />
+                        <span className='text-lg text-gray-700'>{ location }</span>
+                    </div>
+                    <div
+                        className='flex items-center gap-x-1'
+                        style={{ display: website ? 'flex' : 'none' }}
+                    >
+                        <AiOutlineLink className='text-lg text-gray-900' />
+                        <Link href={website!} target='_blank' className='text-lg text-twitter-blue hover:underline'>{ website }</Link>
+                    </div>
+                    <div
+                        className='flex items-center gap-x-1'
+                        style={{ display: true ? 'flex' : 'none' }}
+                    >
+                        <AiOutlineSchedule className='text-lg text-gray-900' />
+                        <span className='text-lg text-gray-700'>Joined October 2020</span>
                     </div>
                 </div>
 
