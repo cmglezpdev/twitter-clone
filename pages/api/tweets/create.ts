@@ -23,7 +23,8 @@ async function createTweet(req: NextApiRequest, res: NextApiResponse<Data>) {
     if( !mongoose.isValidObjectId(userId) )
         return res.status(400).json({ message: 'Invalid user id' });   
 
-    if( text.trim().length === 0 || text.trim().length > 250 )
+    // Add validations for text
+    if( text.trim().length === 0 )
         return res.status(400).json({ message: 'Invalid tweet text' });
     
     try {
