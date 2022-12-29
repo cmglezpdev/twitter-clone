@@ -45,9 +45,9 @@ async function updateUser(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     const { name, username, email, bio, location, website, brith } = req.body;
     if( !validations.isValidName(name) ) return res.status(400).json({ message: 'Invalid name' });
-    if( !validations.isValidBio(bio) ) return res.status(400).json({ message: 'Invalid bio' });
-    if( !validations.isValidLocation(location) ) return res.status(400).json({ message: 'Invalid location' });
-    if( !validations.isValidWebsite(website) ) return res.status(400).json({ message: 'Invalid website' });
+    if( bio && bio.length === 0 && validations.isValidBio(bio) ) return res.status(400).json({ message: 'Invalid bio' });
+    if( location && location.length === 0 && validations.isValidLocation(location) ) return res.status(400).json({ message: 'Invalid location' });
+    if( website && website.length === 0 && validations.isValidWebsite(website) ) return res.status(400).json({ message: 'Invalid website' });
     if( !validations.isValidBirthday(brith) ) return res.status(400).json({ message: 'Invalid birth' });
     
     // if( !validations.isValidUsername(username) ) return res.status(400).json({ message: 'Invalid username' });
