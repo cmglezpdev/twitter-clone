@@ -6,9 +6,12 @@ export interface IUser {
     username     : string;
     email        : string;
     password?    : string;
-    bio          : string;
-    avatar       : string;
-    banner       : string;
+    bio?         : string;
+    avatar?      : string;
+    banner?      : string;
+    location?    : string;
+    website?     : string;
+    birth?       : string;
 
     tweets       : string[];
     retweets     : string[];
