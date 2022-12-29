@@ -174,7 +174,6 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal }) => {
                                 defaultValue={values.website}
                                 style={ errors.website ? { borderColor: 'red' } : {} }
                             />
-                            <span>{JSON.stringify(user)}</span>
                             <span
                                 className='text-red-600 text-sm'
                                 style={{ display: errors.website ? 'block' : 'none' }}
