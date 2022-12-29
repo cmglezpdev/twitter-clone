@@ -48,7 +48,7 @@ export const SideMenu = () => {
                     <span className='px-2 text-xl hidden lg:block'>Notifications</span>
                 </div>
             </Link>
-            <Link href='/cmglezpdev'>
+            <Link href={`/${user?.username || ''}`}>
                 <div className='flex rounded-full p-3 cursor-pointer hover:bg-gray-200'>
                     <CgProfile className='text-3xl' />
                     <span className='px-2 text-xl hidden lg:block'>Profile</span>
