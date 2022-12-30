@@ -19,7 +19,6 @@ export interface IUser {
     // ... other fields
     following    : string[];
     followers    : string[];
-    joined       : string;
-    createdAt?   : string;
-    updatedAt?   : string;
+    createdAt    : string;
+    updatedAt    : string;
 }
