@@ -7,7 +7,7 @@ function HomePage() {
       title="Home / Twitter"
       pageDescription="Twitter clone"
     >
-      <Feed />
+      <Feed endpoint='/api/tweets' />
     </AppLayout>
   )
 }
