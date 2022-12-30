@@ -14,6 +14,7 @@ import { AuthContext } from '../context/auth';
 import { dates } from '../services';
 
 import img from '../public/avatar.png'
+import { Loader } from './spinners';
 
 interface Props {
     tweet: ITweet;
@@ -38,7 +39,12 @@ export const Tweet:FC<Props> = ({ tweet }) => {
             setTweetContent(data);
     }, [data])
 
-    if( !username || !tweet ) return <h1>Loading</h1>;
+    if( !username || !tweet )
+        return (
+            <div className='border-2 border-gray-200 mb-1 w-full h-32 flex justify-center items-center'>
+                <Loader />
+            </div>
+        )
 
 
     const onReaction = async( type: string ) => {
