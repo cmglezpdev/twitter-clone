@@ -11,6 +11,7 @@ import { IoShareOutline } from 'react-icons/io5'
 import { twitterApi } from '../api';
 import { ITweet, IUser } from '../interfaces'
 import { AuthContext } from '../context/auth';
+import { dates } from '../services';
 
 import img from '../public/avatar.png'
 
@@ -24,7 +25,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     const [{ username, name }, setUser ] = useState<IUser>({} as IUser);
     const { user } = useContext(AuthContext);
 
-    const { _id, user: userId, likes, retweets, comments, views, text } = tweetContent;
+    const { _id, user: userId, likes, retweets, comments, views, text, createdAt } = tweetContent;
     const { data } = useSWR(`api/tweets/${_id}`, { refreshInterval: 10000 });
 
     useEffect(() => {
@@ -77,9 +78,11 @@ export const Tweet:FC<Props> = ({ tweet }) => {
             </div>
             <div className='p-2'>
                 <Link href={`/${ username }`}>
-                    <p className='flex'>
-                        <span className='mr-1 font-bold hover:underline'>{ name }</span>
+                    <p className='flex gap-x-2'>
+                        <span className='font-bold hover:underline'>{ name }</span>
                         <span className='text-gray-700'>@{ username }</span>
+                        &bull;
+                        <span>{ dates.formatDistance( createdAt ) }</span>
                     </p>
                 </Link>
 

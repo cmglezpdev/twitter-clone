@@ -1,13 +1,14 @@
 import { FC, useState } from 'react';
+import Link from 'next/link';
 
 import { CiLocationOn } from 'react-icons/ci';
 import { AiOutlineLink, AiOutlineSchedule } from 'react-icons/ai';
 
 import { IUser } from '../../interfaces';
 import { ProfileSettingsModal } from '../modals';
-
-import Link from 'next/link';
 import { Photos, Buttons } from './';
+import { dates } from '../../services';
+
 
 interface Props {
     user: IUser;
@@ -17,7 +18,7 @@ interface Props {
 export const Header:FC<Props> = ({ user }) => {
 
     const [showSettingsProfile, setShowSettingsProfile] = useState(false);
-    const { name, username, bio, followers, following, location, website } = user;
+    const { name, username, bio, followers, following, location, website, createdAt } = user;
 
     return (
         <>
@@ -57,7 +58,7 @@ export const Header:FC<Props> = ({ user }) => {
                         style={{ display: true ? 'flex' : 'none' }}
                     >
                         <AiOutlineSchedule className='text-lg text-gray-900' />
-                        <span className='text-lg text-gray-700'>Joined October 2020</span>
+                        <span className='text-lg text-gray-700'>Joined {dates.formatJoined(createdAt)}</span>
                     </div>
                 </div>
 
