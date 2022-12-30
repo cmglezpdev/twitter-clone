@@ -22,13 +22,13 @@ export const Header:FC<Props> = ({ user }) => {
 
     return (
         <>
-            <header className='mt-[70px] min-w-[530px]'>
+            <header className='mt-[70px] min-w-[530px] px-1'>
                 <div className='relative'>
                     <Photos />
                     <Buttons openSettingsProfile={() => setShowSettingsProfile(true)} user={user} />
                 </div>
 
-                <div className='mt-4'>
+                <div className='mt-4 px-2'>
                     <div className='flex flex-col text-lg'>
                         <span className='font-bold text-xl'>{ name }</span>
                         <span className='text-gray-700'>@{ username }</span>
@@ -38,7 +38,7 @@ export const Header:FC<Props> = ({ user }) => {
                     </div>
                 </div>
 
-                <div className='flex gap-x-6 flex-wrap'>
+                <div className='flex gap-x-6 flex-wrap px-2'>
                     <div
                         className='flex items-center gap-x-1'
                         style={{ display: location ? 'flex' : 'none' }}
@@ -62,7 +62,7 @@ export const Header:FC<Props> = ({ user }) => {
                     </div>
                 </div>
 
-                <div className='mt-3 flex'>
+                <div className='mt-3 flex px-2'>
                     <div className='flex items-center'>
                         <span className='font-bold text-md mr-2'>{ following.length }</span>
                         <span className='text-gray-700'>Following</span>
