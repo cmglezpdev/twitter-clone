@@ -41,9 +41,13 @@ async function likeTweet(req: NextApiRequest, res: NextApiResponse<Data>) {
         tweet.likes = isLiked
                 ? tweet.likes.filter(id => JSON.parse(JSON.stringify(id)) !== userId)
                 : tweet.likes.concat(userId);
-
-        await tweet.save();
+        user.likes = isLiked
+                ? user.likes.filter(id => JSON.parse(JSON.stringify(id)) !== tweetId)
+                : user.likes.concat(tweetId);
+        
+        await Promise.all([tweet.save(), user.save()])
         db.disconnect();
+        
         return res.status(200).json( tweet );
 
     } catch (error) {

@@ -15,6 +15,7 @@ const userSchema = new Schema({
 
     tweets      : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
     retweets    : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
+    likes       : { type: [mongoose.Types.ObjectId], ref: 'Tweet' },
 
     // ... other fields
     following   : { type: [mongoose.Types.ObjectId], ref: 'User' },

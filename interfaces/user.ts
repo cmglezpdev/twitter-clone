@@ -15,6 +15,7 @@ export interface IUser {
 
     tweets       : string[];
     retweets     : string[];
+    likes        : string[];
 
     // ... other fields
     following    : string[];
