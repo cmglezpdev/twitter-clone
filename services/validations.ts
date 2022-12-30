@@ -1,5 +1,3 @@
-import { compareDesc, format } from 'date-fns';
-
 
 export const isValidEmail = (email: string): boolean => {
   
@@ -17,7 +15,7 @@ export const isValidBirthday = (date: string) => {
   const birthday = new Date(date);
   const today = new Date(Date.now());
 
-  return compareDesc(birthday, today) > 0
+  return (today.getTime() - birthday.getTime()) > 0;
 }
 
 export const isValidPassword = (password: string) => {
