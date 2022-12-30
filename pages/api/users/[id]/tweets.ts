@@ -28,7 +28,7 @@ async function getTweets(req: NextApiRequest, res: NextApiResponse<Data>) {
             if( !tweetsId )
                 return res.status(400).json({ message: 'User no found' });
 
-                const tweets = await Tweet.find({ _id: { $in: tweetsId.tweets } }).sort({ createdAt: 'asc' }).lean();
+                const tweets = await Tweet.find({ _id: { $in: tweetsId.tweets } }).sort({ createdAt: 'desc' }).lean();
             await db.disconnect();
             return res.status(200).json( tweets );
         }
@@ -38,7 +38,7 @@ async function getTweets(req: NextApiRequest, res: NextApiResponse<Data>) {
             if( !tweetsId )
                 return res.status(400).json({ message: 'User no found' });
             
-            const tweets = await Tweet.find({ _id: { $in: tweetsId.likes } }).sort({ createdAt: 'asc' }).lean();
+            const tweets = await Tweet.find({ _id: { $in: tweetsId.likes } }).sort({ createdAt: 'desc' }).lean();
             await db.disconnect();
             return res.status(200).json( tweets );
         }    
