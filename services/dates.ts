@@ -28,7 +28,8 @@ export const formatDistance = ( date: Date | string, now: Date | string  = new D
 
     if( seconds < 60 )  return `${seconds}s`; // seconds < 1 minute
     if( seconds < 3600 )  return `${Math.floor(seconds / 60)}m`; // seconds < 1 hour
-    if( seconds < 86400 )  return `${Math.floor(seconds / 3600)}d`; // seconds < 1 day
+    if( seconds < 86400 )  return `${Math.floor(seconds / 3600)}h`; // seconds < 1 day
+    if( seconds < 259200 )  return `${Math.floor(seconds / 86400)}d`; // seconds < 3 days
     return `${months[date.getMonth()].short} ${date.getDate()}`; // seconds > 1 day
 }
 
