@@ -71,75 +71,87 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     }
 
     return (
-        <div className='w-full flex hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-200'>
-            <div className='p-2'>
-                <Link href={`/${ username }`}>
-                    <Image 
-                        src={img} alt='avatar' 
-                        width={50} height={50} 
-                        className='rounded-full' 
-                        style={{ minWidth: 50, minHeight: 50 }}
-                    />
-                </Link>
+        <div className='w-full hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-200'>
+            
+            <div 
+                className='w-full pl-10 flex items-center gap-x-2 text-gray-600 font-bold'
+                style={{ display: retweets.includes(user?._id || '') ? 'flex' : 'none' }}
+            >
+                <AiOutlineRetweet />
+                <span>You Retweeted</span>
             </div>
-            <div className='p-2'>
-                <Link href={`/${ username }`}>
-                    <p className='flex gap-x-2'>
-                        <span className='font-bold hover:underline'>{ name }</span>
-                        <span className='text-gray-700'>@{ username }</span>
-                        &bull;
-                        <span>{ dates.formatDistance( createdAt ) }</span>
-                    </p>
-                </Link>
 
-                <p className='whitespace-pre-line'>{ text }</p>
-                
-                <div className='flex justify-start'>
-                    <span className='flex items-center mt-3 mr-10 text-gray-700 hover:text-blue-600 group transition-colors'>
-                        <span className='group-hover:bg-blue-200 rounded-full p-2'>
-                            <CiViewBoard className='text-xl font-light' />
-                        </span>
-                        <span>{ views.length }</span>
-                    </span>
-                    <span className='flex items-center mt-3 mr-10 text-gray-700 hover:text-blue-600 group transition-colors'>
-                        <span className='group-hover:bg-blue-200 rounded-full p-2'>
-                            <TbMessageCircle2 className='text-xl font-light' />
-                        </span>
-                        <span>{ comments.length }</span>
-                    </span>
+            <div className='flex'>
+                <div className='p-2'>
+                    <Link href={`/${ username }`}>
+                        <Image 
+                            src={img} alt='avatar' 
+                            width={50} height={50} 
+                            className='rounded-full' 
+                            style={{ minWidth: 50, minHeight: 50 }}
+                        />
+                    </Link>
+                </div>
+                <div className='p-2'>
+                    <Link href={`/${ username }`}>
+                        <p className='flex gap-x-2'>
+                            <span className='font-bold hover:underline'>{ name }</span>
+                            <span className='text-gray-700'>@{ username }</span>
+                            &bull;
+                            <span>{ dates.formatDistance( createdAt ) }</span>
+                        </p>
+                    </Link>
 
-                    <span 
-                        className='flex items-center mt-3 mr-10 text-gray-700 hover:text-green-600 group transition-colors'
-                        onClick={() => onReaction('retweet')}
-                    >
-                        <span className='group-hover:bg-green-200 rounded-full p-2'>
-                            <AiOutlineRetweet 
-                                className='text-xl font-light' 
-                                style={{ color: retweets.includes(user?._id || '') ? 'green' : '' }}
-                            />
+                    <p className='whitespace-pre-line'>{ text }</p>
+                    
+                    <div className='flex justify-start'>
+                        <span className='flex items-center mt-3 mr-10 text-gray-700 hover:text-blue-600 group transition-colors'>
+                            <span className='group-hover:bg-blue-200 rounded-full p-2'>
+                                <CiViewBoard className='text-xl font-light' />
+                            </span>
+                            <span>{ views.length }</span>
                         </span>
-                        <span style={{ color: retweets.includes(user?._id || '') ? 'green' : '' }}>{ retweets.length }</span>
-                    </span>
-
-                    <span 
-                        className='flex items-center mt-3 mr-10 text-gray-700 hover:text-red-600 group transition-colors'
-                        onClick={() => onReaction('like')}
-                    >
-                        <span className='group-hover:bg-red-200 rounded-full p-2'>
-                            {
-                                likes.includes(user?._id || '')
-                                    ? ( <AiFillHeart className='text-xl font-light text-red-600' /> )
-                                    : ( <AiOutlineHeart className='text-xl font-light' /> )
-                            }
+                        <span className='flex items-center mt-3 mr-10 text-gray-700 hover:text-blue-600 group transition-colors'>
+                            <span className='group-hover:bg-blue-200 rounded-full p-2'>
+                                <TbMessageCircle2 className='text-xl font-light' />
+                            </span>
+                            <span>{ comments.length }</span>
                         </span>
-                        <span style={{ color: likes.includes(user?._id || '')? 'red' : '' }}>{ likes.length }</span>
-                    </span>
 
-                    <span className='hover:bg-blue-200 rounded-full p-2 mt-3 mr-10'>
-                        <IoShareOutline className='text-xl text-gray-700 hover:text-blue-600 transition-colors' />
-                    </span>
+                        <span 
+                            className='flex items-center mt-3 mr-10 text-gray-700 hover:text-green-600 group transition-colors'
+                            onClick={() => onReaction('retweet')}
+                        >
+                            <span className='group-hover:bg-green-200 rounded-full p-2'>
+                                <AiOutlineRetweet 
+                                    className='text-xl font-light' 
+                                    style={{ color: retweets.includes(user?._id || '') ? 'green' : '' }}
+                                />
+                            </span>
+                            <span style={{ color: retweets.includes(user?._id || '') ? 'green' : '' }}>{ retweets.length }</span>
+                        </span>
+
+                        <span 
+                            className='flex items-center mt-3 mr-10 text-gray-700 hover:text-red-600 group transition-colors'
+                            onClick={() => onReaction('like')}
+                        >
+                            <span className='group-hover:bg-red-200 rounded-full p-2'>
+                                {
+                                    likes.includes(user?._id || '')
+                                        ? ( <AiFillHeart className='text-xl font-light text-red-600' /> )
+                                        : ( <AiOutlineHeart className='text-xl font-light' /> )
+                                }
+                            </span>
+                            <span style={{ color: likes.includes(user?._id || '')? 'red' : '' }}>{ likes.length }</span>
+                        </span>
+
+                        <span className='hover:bg-blue-200 rounded-full p-2 mt-3 mr-10'>
+                            <IoShareOutline className='text-xl text-gray-700 hover:text-blue-600 transition-colors' />
+                        </span>
+                    </div>
                 </div>
             </div>
+
         </div>
     )
 }
