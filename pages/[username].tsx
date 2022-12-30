@@ -4,7 +4,7 @@ import { GetStaticProps, GetStaticPaths, NextPage } from 'next'
 import { AppLayout } from '../layouts';
 import { dbUsers } from '../database';
 import { IUser } from '../interfaces';
-import { Header } from '../components/profile';
+import { Actions, Header } from '../components/profile';
 import { UserContext } from '../context/user';
 
 interface Props {
@@ -40,6 +40,7 @@ const ProfilePage:NextPage<Props> = ({ user: ProfileUser }) => {
             pageDescription={ !bio ? `Profile of ${name} (${username})` : bio }
         >
             <Header user={user} />
+            <Actions />
 
         </AppLayout>
     )
