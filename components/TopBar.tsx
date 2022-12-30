@@ -6,7 +6,7 @@ interface Props {
 
 export const TopBar:FC<Props> = ({ title }) => {
     return (
-        <div className='w-full h-16 flex items-center fixed px-8 backdrop-blur-lg'>
+        <div className='w-full h-16 flex items-center fixed px-8 backdrop-blur-lg z-[999]'>
             <span className='font-bold text-2xl'>{title}</span>
         </div>
     )
