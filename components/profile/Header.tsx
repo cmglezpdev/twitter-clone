@@ -38,7 +38,7 @@ export const Header:FC<Props> = ({ user }) => {
                     </div>
                 </div>
 
-                <div className='flex gap-x-6 flex-wrap px-2'>
+                <div className='flex gap-x-3 mt-4 flex-wrap px-2'>
                     <div
                         className='flex items-center gap-x-1'
                         style={{ display: location ? 'flex' : 'none' }}
