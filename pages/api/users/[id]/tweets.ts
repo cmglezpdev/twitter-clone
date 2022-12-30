@@ -24,13 +24,23 @@ async function getTweets(req: NextApiRequest, res: NextApiResponse<Data>) {
     try {
         await db.connect();
         if( type === 'Tweets' || type === 'All' ) {
-            const tweetsId = await User.findById(id).select('tweets').lean();
+            const tweetsId = await User.findById(id).select('tweets retweets').lean();
             if( !tweetsId )
                 return res.status(400).json({ message: 'User no found' });
 
-                const tweets = await Tweet.find({ _id: { $in: tweetsId.tweets } }).sort({ createdAt: 'desc' }).lean();
+            const tweets = await Tweet.find({ _id: { $in: tweetsId.tweets } }).sort({ createdAt: 'desc' }).lean();
+            const retweeted = await Tweet.find({_id: { $in: tweetsId.retweets } }).sort({ createdAt: 'desc' }).lean();
+
             await db.disconnect();
-            return res.status(200).json( tweets );
+            // return tweets ans rettweets sorted by createdAt
+            
+            return res.status(200).json( 
+                [...tweets, ...retweeted].sort((a, b) => {
+                    const dateA = new Date(a.createdAt);
+                    const dateB = new Date(b.createdAt);
+                    return dateB.getTime() - dateA.getTime();
+                })
+            );
         }
 
         if( type === 'Likes' ) {
