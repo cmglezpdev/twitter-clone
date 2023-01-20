@@ -18,6 +18,7 @@ export interface IUser {
     likes        : string[];
 
     // ... other fields
+    pined?       : string;
     following    : string[];
     followers    : string[];
     createdAt    : string;
