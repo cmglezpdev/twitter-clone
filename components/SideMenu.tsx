@@ -96,14 +96,18 @@ export const SideMenu = () => {
                     <AiOutlineDown className='text-lg hidden lg:block' />
                 </div>
             }
-
+            
             <BasicModal
                 className='absolute z-10 w-screen h-screen top-0 left-0'
                 open={openMiniModal}
                 closeModal={() => setOpenMiniModal(false)}
             >
                 <button 
-                    className='py-5 px-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative top-[320px] left-36'
+                    className='py-5 px-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative'
+                    style={{
+                        top: '320px',
+                        left: '100px'
+                    }}
                     onClick={logOutUser}
                 >
                     <span 
