@@ -8,6 +8,7 @@ import { TbMessageCircle2 } from 'react-icons/tb'
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { IoShareOutline } from 'react-icons/io5'
 import { FiMoreHorizontal } from 'react-icons/fi';
+import { BsFillPinAngleFill, BsFillPinFill } from 'react-icons/bs'
 
 import { twitterApi } from '../api';
 import { ITweet, IUser } from '../interfaces'
@@ -193,9 +194,12 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                     }}
                     ref={settingsRef}
                 >
-                    {/* <li 
+                    <li 
                         className='font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
-                    >Log out @{user?.username}</li> */}
+                    >
+                        <BsFillPinAngleFill />
+                        Pin to your profile
+                    </li>
                 </ul>
             </BasicModal>
 
