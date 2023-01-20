@@ -12,10 +12,12 @@ export const isValidEmail = (email: string): boolean => {
 
 
 export const isValidBirthday = (date: string) => {
-  const birthday = new Date(date);
-  const today = new Date(Date.now());
+  // const birthday = new Date(date);
+  // const today = new Date(Date.now());
 
-  return (today.getTime() - birthday.getTime()) > 0;
+  // return (today.getTime() - birthday.getTime()) > 0;
+
+  return true;
 }
 
 export const isValidPassword = (password: string) => {
