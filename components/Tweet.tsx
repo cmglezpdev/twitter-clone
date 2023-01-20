@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useContext } from 'react';
+import { FC, useState, useEffect, useContext, MouseEvent, useRef } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -7,6 +7,7 @@ import { CiViewBoard } from 'react-icons/ci'
 import { TbMessageCircle2 } from 'react-icons/tb'
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { IoShareOutline } from 'react-icons/io5'
+import { FiMoreHorizontal } from 'react-icons/fi';
 
 import { twitterApi } from '../api';
 import { ITweet, IUser } from '../interfaces'
@@ -15,6 +16,7 @@ import { dates } from '../services';
 
 import img from '../public/avatar.png'
 import { Loader } from './spinners';
+import { BasicModal } from './modals';
 
 interface Props {
     tweet: ITweet;
@@ -25,6 +27,10 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     const [tweetContent, setTweetContent] = useState<ITweet>(tweet);
     const [{ username, name }, setUser ] = useState<IUser>({} as IUser);
     const { user } = useContext(AuthContext);
+    const settingsRef = useRef<HTMLUListElement>(null);
+    const [openMiniModal, setOpenMiniModal] = useState(false);
+        const [settingsPosition, setSettingsPosition] = useState({ posX: 0, posY: 0 })
+
 
     const { _id, user: userId, likes, retweets, comments, views, text, createdAt } = tweetContent;
     const { data } = useSWR(`api/tweets/${_id}`, { refreshInterval: 10000 });
@@ -45,6 +51,18 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                 <Loader />
             </div>
         )
+
+    const onOpenSettings = (e: MouseEvent<HTMLDivElement>) => {
+        const { pageX, pageY } = e; 
+        setSettingsPosition({ posX: pageX, posY: pageY });
+        console.log({ pageX, pageY });
+        setOpenMiniModal(true);
+    }
+    
+    const onCloseSettings = () => {
+        setSettingsPosition({ posX: 0, posY: 0 });
+        setOpenMiniModal(false);
+    }
 
 
     const onReaction = async( type: string ) => {
@@ -92,19 +110,28 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                         />
                     </Link>
                 </div>
-                <div className='p-2'>
-                    <Link href={`/${ username }`}>
-                        <p className='flex gap-x-2'>
-                            <span className='font-bold hover:underline'>{ name }</span>
-                            <span className='text-gray-700'>@{ username }</span>
-                            &bull;
-                            <span>{ dates.formatDistance( createdAt ) }</span>
-                        </p>
-                    </Link>
+                <div className='p-2 w-full'>
+                    <div className='flex justify-between'>
+                        <Link href={`/${ username }`}>
+                            <p className='flex gap-x-2'>
+                                <span className='font-bold hover:underline'>{ name }</span>
+                                <span className='text-gray-700'>@{ username }</span>
+                                &bull;
+                                <span>{ dates.formatDistance( createdAt ) }</span>
+                            </p>
+                        </Link>
+
+                        <div 
+                            className='p-2 hover:bg-gray-200 rounded-full'
+                            onClick={onOpenSettings}
+                        >
+                            <FiMoreHorizontal className='text-lg'/>
+                        </div>
+                    </div>
 
                     <p className='whitespace-pre-line'>{ text }</p>
                     
-                    <div className='flex justify-start'>
+                    <div className='flex justify-around'>
                         <span className='flex items-center mt-3 mr-10 text-gray-700 hover:text-blue-600 group transition-colors'>
                             <span className='group-hover:bg-blue-200 rounded-full p-2'>
                                 <CiViewBoard className='text-xl font-light' />
@@ -151,6 +178,28 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                     </div>
                 </div>
             </div>
+
+
+            <BasicModal
+                className='absolute z-10 w-screen h-screen top-0 left-0'
+                open={openMiniModal}
+                closeModal={onCloseSettings}
+            >
+                <ul
+                    className='py-5 px-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative'
+                    style={{
+                        top: settingsPosition.posY - 10,
+                        left: settingsPosition.posX -  250,
+                    }}
+                    ref={settingsRef}
+                >
+                    {/* <li 
+                        className='font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                    >Log out @{user?.username}</li> */}
+                </ul>
+            </BasicModal>
+
+
 
         </div>
     )

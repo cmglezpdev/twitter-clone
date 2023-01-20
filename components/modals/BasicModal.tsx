@@ -1,7 +1,5 @@
 import { ReactNode, FC, useRef, MouseEvent } from 'react';
 
-import { IUser } from '../../interfaces';
-
 interface Props {
     open: boolean;
     closeModal: () => void;
