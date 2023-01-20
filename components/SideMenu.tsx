@@ -79,21 +79,21 @@ export const SideMenu = () => {
             {
                 user &&
                 <div
-                    className='flex items-center justify-between mt-7 w-[85%] cursor-pointer hover:bg-gray-200 rounded-full p-2'
+                    className='flex items-center justify-between mt-7 max-w-[85%] cursor-pointer hover:bg-gray-700 rounded-full p-2'
                     onClick={() => setOpenMiniModal(true)} 
                 >
                     <Image 
                         src={img} alt='avatar' 
-                        width={50} height={50}
-                        style={{ minWidth: 50, minHeight: 50 }}
-                        className='rounded-full mr-2' 
+                        width={40} height={40}
+                        style={{ minWidth: 40, minHeight: 40 }}
+                        className='rounded-full' 
                     />
-                    <div className='hidden xl:block'>
-                        <span className='font-semibold block'>{ user.name.slice(0, 17).concat('...') }</span>
+                    <div className='hidden lg:block'>
+                        <span className='font-semibold block'>{ user.name.slice(0, 11).concat('...') }</span>
                         <span className=''>@{user.username}</span>
                     </div>
                     
-                    <AiOutlineDown className='text-lg hidden xl:block' />
+                    <AiOutlineDown className='text-lg hidden lg:block' />
                 </div>
             }
 
