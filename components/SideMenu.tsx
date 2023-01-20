@@ -79,7 +79,7 @@ export const SideMenu = () => {
             {
                 user &&
                 <div
-                    className='flex items-center justify-between mt-7 max-w-[85%] cursor-pointer hover:bg-gray-700 rounded-full p-2'
+                    className='flex items-center justify-between mt-7 max-w-[85%] cursor-pointer hover:bg-gray-200 rounded-full p-2'
                     onClick={() => setOpenMiniModal(true)} 
                 >
                     <Image 
