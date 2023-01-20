@@ -37,8 +37,10 @@ async function createTweet(req: NextApiRequest, res: NextApiResponse<Data>) {
             user: userId,
             text
         })
+        user.tweets.push(tweet._id);
 
-        await tweet.save();
+        await Promise.all([tweet.save(), user.save()]);
+        
         db.disconnect();
         return res.status(201).json({ message: 'Tweet created successfully' })
 
