@@ -7,7 +7,9 @@ function HomePage() {
       title="Home / Twitter"
       pageDescription="Twitter clone"
     >
-      <Feed endpoint='/api/tweets' />
+      <div className="mt-[70px]">
+        <Feed endpoint='/api/tweets' />
+      </div>
     </AppLayout>
   )
 }

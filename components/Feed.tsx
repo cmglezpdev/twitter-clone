@@ -14,7 +14,7 @@ export const Feed:FC<Props> = ({ endpoint }) => {
   if( isLoading ) return <div>Loading...</div>
 
   return (
-    <div className="w-full min-w-[530px] h-screen px-2 mt-[70px]">
+    <div className="w-full min-w-[530px] h-screen px-2">
       
       {
         data!.map(tweet => (
