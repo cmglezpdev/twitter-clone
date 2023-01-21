@@ -1,8 +1,7 @@
-import { FC, useState, useContext, useEffect } from 'react';
+import { FC, useState, useContext } from 'react';
 
 import { IoNotificationsOffOutline, IoNotificationsOutline } from 'react-icons/io5'
 import { IUser } from '../../interfaces';
-import { twitterApi } from '../../api';
 import { UserContext } from '../../context/user';
 
 interface Props {
@@ -12,17 +11,13 @@ interface Props {
 
 export const Buttons:FC<Props> = ({ user: profileUser, openSettingsProfile }) => {
     
-    const { user: userAuth, setProfileUser } = useContext(UserContext);
-    const [isFollowing, setIsFollowing] = useState(false);
-
-    useEffect(() => {
-        setIsFollowing(profileUser.followers.includes(userAuth?._id || ''));
-    }, [profileUser.followers, userAuth?._id])
+    const { user: userAuth, setProfileUser, onFollowUser } = useContext(UserContext);
+    const [isFollowing, setIsFollowing] = useState(userAuth?.following.includes(profileUser._id));
 
     const onFollow =  async (follow: boolean) => {
-        await twitterApi.put(`/users/${profileUser._id}/follow`);
-        setProfileUser(profileUser._id);
+        onFollowUser(profileUser._id)
         setIsFollowing(follow);
+        setProfileUser(profileUser._id);
     }
 
     return (
