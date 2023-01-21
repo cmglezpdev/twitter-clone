@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useContext, MouseEvent, useRef } from 'react';
+import { FC, useState, useEffect, useContext, MouseEvent } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -10,15 +10,16 @@ import { IoShareOutline } from 'react-icons/io5';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { BsPinAngle, BsPin } from 'react-icons/bs';
 
-import { twitterApi } from '../api';
-import { ITweet, IUser } from '../interfaces';
-import { AuthContext } from '../context/auth';
-import { UserContext } from '../context/user';
-import { dates } from '../services';
-import { BasicModal } from './modals';
+import { twitterApi } from '../../api';
+import { ITweet, IUser } from '../../interfaces';
+import { AuthContext } from '../../context/auth';
+import { UserContext } from '../../context/user';
+import { dates } from '../../services';
+import { BasicModal } from '../modals';
 
-import img from '../public/avatar.png';
-import { Loader } from './spinners';
+import img from '../../public/avatar.png';
+import { Loader } from '../spinners';
+import { TweetMessage } from './TweetMessage';
 
 interface Props {
     tweet: ITweet;
@@ -92,22 +93,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     return (
         <div className='w-full hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-200'>
             
-            <div 
-                className='w-full pl-10 flex items-center gap-x-2 text-gray-600 font-bold'
-                style={{ display: retweets.includes(user?._id || '') ? 'flex' : 'none' }}
-            >
-                <AiOutlineRetweet />
-                <span>You Retweeted</span>
-            </div>
-
-            <div 
-                className='w-full pl-10 flex items-center gap-x-2 text-gray-600 font-bold'
-                style={{ display: GUser?.pined === _id ? 'flex' : 'none' }}
-            >
-                <BsPin />
-                <span>Pinned Tweet</span>
-            </div>
-
+            <TweetMessage tweet={tweet} user={GUser} />
 
             <div className='flex'>
                 <div className='p-2'>

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import useSWR from 'swr';
 import { ITweet } from '../interfaces';
-import { Tweet } from "./Tweet"
+import { Tweet } from "./tweets"
 
 interface Props {
   endpoint: string;
