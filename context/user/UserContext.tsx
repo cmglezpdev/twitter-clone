@@ -11,6 +11,7 @@ export interface IUserConext {
     deleteUser: () => void,
     setProfileUser: (id: string) => void,
     deleteProfileUser: () => void,
+    pinTweet: (tweetId: string | undefined) => void,
 }
 
 

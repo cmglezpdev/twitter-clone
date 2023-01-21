@@ -43,7 +43,20 @@ export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
     
     const deleteProfileUser = useCallback(() => dispatch({ type: '[User] - delete profile User' }), []);
     
+    const pinTweet = useCallback((tweetId: string | undefined) => {
+        if( !tweetId ) {
+            twitterApi.post(`/users/unpin`)
+            .then((_) => dispatch({ type: '[User] - Unpin Tweet' }) )
+            .catch(error => console.log(error) )
+            return;
+        }
+
+        twitterApi.post(`/users/pin`, { tweetId })
+        .then((_) => dispatch({ type: '[User] - Pin Tweet', payload: tweetId }) )
+        .catch(error => console.log(error) )
     
+    }, [])
+
     return (
         <UserContext.Provider
             value={{
@@ -54,6 +67,7 @@ export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
                 deleteUser,
                 setProfileUser,
                 deleteProfileUser,
+                pinTweet
             }}
         >
             { children }
