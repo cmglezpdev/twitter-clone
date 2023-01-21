@@ -24,3 +24,10 @@ export interface IUser {
     createdAt    : string;
     updatedAt    : string;
 }
+
+export interface IAuthUser {
+    _id      : string;
+    name     : string;
+    username : string;
+    email    : string;
+}

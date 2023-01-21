@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models';
 import { validations } from '../services';
-import { IUser } from '../interfaces';
+import { IAuthUser, IUser } from '../interfaces';
 import { db } from './'
 
 
-export const checkUserEmailAndPassword = async ( email: string, password: string ) => {
+export const checkUserEmailAndPassword = async ( email: string, password: string ): Promise<IAuthUser | null> => {
 
     if( !validations.isValidEmail(email) )
         return null;
@@ -30,7 +30,7 @@ export const checkUserEmailAndPassword = async ( email: string, password: string
     }
 }
 
-export const oAuthUser = async( oAuthEmail:string, oAuthName:string ) => {
+export const oAuthUser = async( oAuthEmail:string, oAuthName:string ): Promise<IAuthUser | null> => {
     await db.connect();
 
     const user = await User.findOne({ email: oAuthEmail }).lean();
