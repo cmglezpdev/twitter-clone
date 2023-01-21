@@ -15,7 +15,6 @@ export const authOptions = {
 
             // @ts-ignore
             async authorize( credentials ) {
-                // TODO: Validate credentials with database
                 const { email, password } = credentials!;
                 return await dbUsers.checkUserEmailAndPassword(email, password);
             }
@@ -40,7 +39,7 @@ export const authOptions = {
 
     // Callbacks
     callbacks: {
-        async jwt({ token, account, user }: any) {  
+        async jwt({ token, account, user }: any) {
             if( account ) {
                 token.accessToken = account.accessToken;
                 switch( account.type ) {
@@ -58,7 +57,7 @@ export const authOptions = {
             return token;
         },
 
-        async session({ session, token, user }: any) {
+        async session({ session, token }: any) {
             session.accessToken = token.accessToken;
             session.user = token.user;
             return session;
