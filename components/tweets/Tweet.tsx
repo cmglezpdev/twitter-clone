@@ -58,7 +58,6 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     const onOpenSettings = (e: MouseEvent<HTMLDivElement>) => {
         const { pageX, pageY } = e; 
         setSettingsPosition({ posX: pageX, posY: pageY });
-        console.log({ pageX, pageY });
         setOpenMiniModal(true);
     }
     
@@ -190,14 +189,16 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                 >
                     <li 
                         className='flex items-center gap-2 font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        style={{ display: GUser?.pined !== tweet._id && GUser?._id === tweet.user ? 'flex' : 'none' }}
                         onClick={() => pinTweet(tweet._id)}
-                    >
+                        >
                         <BsPinAngle />
                         Pin to your profile
                     </li>
 
                     <li 
                         className='flex items-center gap-2 font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        style={{ display: GUser?.pined === tweet._id && GUser?._id === tweet.user ? 'flex' : 'none' }}
                         onClick={() => pinTweet(undefined)}
                     >
                         <BsPin />
