@@ -1,6 +1,8 @@
-import { useState, MouseEvent, useContext } from 'react';
+import { useState, MouseEvent, useContext, useEffect } from 'react';
 import { UserContext } from '../../context/user';
+import { PinTweetComparer, Comparer } from '../../services/sort';
 import { Feed } from '../Feed';
+import { ITweet } from '../../interfaces/tweet';
 
 type Section = 'Tweets' | 'Tweets & replies' | 'Media' | 'Likes';
 
@@ -9,6 +11,13 @@ export const Actions = () => {
     
     const [section, setSection] = useState<Section>('Tweets')
     const { user } = useContext(UserContext);
+    const [comparer, setComparer] = useState<Comparer<ITweet>>();
+
+    useEffect(() => {
+        if( user ) {
+            setComparer( new PinTweetComparer(user!) );
+        }
+    }, [user])
 
     const handleSection = (e: MouseEvent<HTMLButtonElement>) => {
         const section = e.currentTarget.textContent as Section;
@@ -53,7 +62,10 @@ export const Actions = () => {
         
             {
                 user &&
-                <Feed endpoint={`/api/users/${user._id}/tweets?type=${section}`} />
+                <Feed 
+                    endpoint={`/api/users/${user._id}/tweets?type=${section}`} 
+                    comparerToSort={comparer!}
+                />
             }
 
         </>
