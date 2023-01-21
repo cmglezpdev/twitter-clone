@@ -9,6 +9,7 @@ import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoShareOutline } from 'react-icons/io5';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { BsPinAngle, BsPin } from 'react-icons/bs';
+import { SlUserFollow, SlUserUnfollow } from 'react-icons/sl'
 
 import { twitterApi } from '../../api';
 import { ITweet, IUser } from '../../interfaces';
@@ -30,7 +31,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     const [tweetContent, setTweetContent] = useState<ITweet>(tweet);
     const [{ username, name }, setUser ] = useState<IUser>({} as IUser);
     const { user } = useContext(AuthContext);
-    const { pinTweet, user: GUser } = useContext(UserContext)
+    const { pinTweet, user: GUser, onFollowUser } = useContext(UserContext)
     const [openMiniModal, setOpenMiniModal] = useState(false);
     const [settingsPosition, setSettingsPosition] = useState({ posX: 0, posY: 0 })
 
@@ -204,6 +205,32 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                         <BsPin />
                         Unpin from profile
                     </li>
+
+
+                    <li 
+                        className='flex items-center gap-2 font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        style={{ display: GUser?._id !== tweet.user && !GUser?.following.includes(tweet.user) ? 'flex' : 'none' }}
+                        onClick={() => onFollowUser(tweet.user)}
+                    >
+                        <SlUserFollow />
+                        {`Follow @${username}`}
+                        
+                    </li>
+
+                    <li 
+                        className='flex items-center gap-2 font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        style={{ display: GUser?._id !== tweet._id && GUser?.following.includes(tweet.user) ? 'flex' : 'none' }}
+                        onClick={() => onFollowUser(tweet.user)}
+                    >
+                        <SlUserUnfollow />
+                        {`Unfollow @${username}`}
+                    </li>
+
+
+                    
+
+
+
                 </ul>
             </BasicModal>
 
