@@ -3,21 +3,22 @@ import Image from 'next/image'
 import Link from 'next/link';
 import useSWR from 'swr';
 
-import { CiViewBoard } from 'react-icons/ci'
-import { TbMessageCircle2 } from 'react-icons/tb'
-import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import { IoShareOutline } from 'react-icons/io5'
+import { CiViewBoard } from 'react-icons/ci';
+import { TbMessageCircle2 } from 'react-icons/tb';
+import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { IoShareOutline } from 'react-icons/io5';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import { BsFillPinAngleFill, BsFillPinFill } from 'react-icons/bs'
+import { BsPinAngle, BsPin } from 'react-icons/bs';
 
 import { twitterApi } from '../api';
-import { ITweet, IUser } from '../interfaces'
+import { ITweet, IUser } from '../interfaces';
 import { AuthContext } from '../context/auth';
+import { UserContext } from '../context/user';
 import { dates } from '../services';
-
-import img from '../public/avatar.png'
-import { Loader } from './spinners';
 import { BasicModal } from './modals';
+
+import img from '../public/avatar.png';
+import { Loader } from './spinners';
 
 interface Props {
     tweet: ITweet;
@@ -28,9 +29,9 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     const [tweetContent, setTweetContent] = useState<ITweet>(tweet);
     const [{ username, name }, setUser ] = useState<IUser>({} as IUser);
     const { user } = useContext(AuthContext);
-    const settingsRef = useRef<HTMLUListElement>(null);
+    const { pinTweet, user: GUser } = useContext(UserContext)
     const [openMiniModal, setOpenMiniModal] = useState(false);
-        const [settingsPosition, setSettingsPosition] = useState({ posX: 0, posY: 0 })
+    const [settingsPosition, setSettingsPosition] = useState({ posX: 0, posY: 0 })
 
 
     const { _id, user: userId, likes, retweets, comments, views, text, createdAt } = tweetContent;
@@ -65,7 +66,6 @@ export const Tweet:FC<Props> = ({ tweet }) => {
         setOpenMiniModal(false);
     }
 
-
     const onReaction = async( type: string ) => {
         switch( type ) {
             case 'like':
@@ -99,6 +99,15 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                 <AiOutlineRetweet />
                 <span>You Retweeted</span>
             </div>
+
+            <div 
+                className='w-full pl-10 flex items-center gap-x-2 text-gray-600 font-bold'
+                style={{ display: GUser?.pined === _id ? 'flex' : 'none' }}
+            >
+                <BsPin />
+                <span>Pinned Tweet</span>
+            </div>
+
 
             <div className='flex'>
                 <div className='p-2'>
@@ -187,18 +196,26 @@ export const Tweet:FC<Props> = ({ tweet }) => {
                 closeModal={onCloseSettings}
             >
                 <ul
-                    className='py-5 px-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative'
+                    className='py-2 border-2 border-gray-100 bg-white rounded-md shadow-md shadow-gray-600 w-64 relative'
                     style={{
                         top: settingsPosition.posY - 10,
                         left: settingsPosition.posX -  250,
                     }}
-                    ref={settingsRef}
                 >
                     <li 
-                        className='font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        className='flex items-center gap-2 font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        onClick={() => pinTweet(tweet._id)}
                     >
-                        <BsFillPinAngleFill />
+                        <BsPinAngle />
                         Pin to your profile
+                    </li>
+
+                    <li 
+                        className='flex items-center gap-2 font-bold p-2 hover:bg-gray-100 cursor-pointer w-full'
+                        onClick={() => pinTweet(undefined)}
+                    >
+                        <BsPin />
+                        Unpin from profile
                     </li>
                 </ul>
             </BasicModal>
