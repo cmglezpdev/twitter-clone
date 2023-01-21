@@ -89,8 +89,8 @@ export const SideMenu = () => {
                         className='rounded-full' 
                     />
                     <div className='hidden lg:block'>
-                        <span className='font-semibold block'>{ user.name.slice(0, 11).concat('...') }</span>
-                        <span className=''>@{user.username}</span>
+                        <span className='font-semibold block text-sm'>{ user.name.slice(0, 9).concat('...') }</span>
+                        <span className='text-sm'>@{user.username}</span>
                     </div>
                     
                     <AiOutlineDown className='text-lg hidden lg:block' />
