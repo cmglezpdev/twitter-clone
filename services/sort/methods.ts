@@ -44,6 +44,7 @@ export class MergeSort<T> implements ISort<T> {
 
     public sort (items: T[]) {
         const len = items.length - 1;
+        if( len < 0 ) return [];
         const copy = [...items];
         return this.MergeSort(copy, 0, len);
     }
