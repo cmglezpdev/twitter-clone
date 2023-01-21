@@ -61,7 +61,7 @@ export const Actions = () => {
             </div>
         
             {
-                user &&
+                user && comparer &&
                 <Feed 
                     endpoint={`/api/users/${user._id}/tweets?type=${section}`} 
                     comparerToSort={comparer!}
