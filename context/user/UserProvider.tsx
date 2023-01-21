@@ -57,6 +57,12 @@ export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
     
     }, [])
 
+    const onFollowUser = useCallback((userToFollowId: string) => {
+        twitterApi.put(`/users/${userToFollowId}/follow`)
+            .then(res => dispatch({ type: '[User] - Follow/Unfollow User', payload: userToFollowId }))
+            .catch(error => console.log(error))
+        }, [])
+
     return (
         <UserContext.Provider
             value={{
@@ -67,7 +73,8 @@ export const UserProvider:FC<{ children: ReactNode }> = ({ children }) => {
                 deleteUser,
                 setProfileUser,
                 deleteProfileUser,
-                pinTweet
+                pinTweet,
+                onFollowUser,
             }}
         >
             { children }

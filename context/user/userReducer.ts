@@ -6,6 +6,7 @@ type UserAction =
     | { type: '[User] - delete User' }
     | { type: '[User] - set Profile User', payload: IUser }
     | { type: '[User] - delete profile User' }
+    | { type: '[User] - Follow/Unfollow User', payload: string }
     | { type: '[User] - Pin Tweet', payload: string }
     | { type: '[User] - Unpin Tweet' }
 
@@ -59,6 +60,23 @@ export const userReducer = ( state: IUserState, action: UserAction ) : IUserStat
                 }
             }
 
+        case '[User] - Follow/Unfollow User':
+            if( !state.user )
+                throw new Error('There is not any user registered');    
+            
+            let following = []
+            if( state.user.following.includes(action.payload) )
+                following = state.user.following.filter(user => user !== action.payload)
+            else following = [...state.user.following, action.payload];
+            
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    following
+                }
+            }
+            
         default:
             return state;
     }

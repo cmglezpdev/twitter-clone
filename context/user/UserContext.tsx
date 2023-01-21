@@ -12,6 +12,7 @@ export interface IUserConext {
     setProfileUser: (id: string) => void,
     deleteProfileUser: () => void,
     pinTweet: (tweetId: string | undefined) => void,
+    onFollowUser: (userToFollowId: string) => void,
 }
 
 
