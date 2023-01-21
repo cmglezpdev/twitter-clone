@@ -93,7 +93,7 @@ export const Tweet:FC<Props> = ({ tweet }) => {
     return (
         <div className='w-full hover:bg-gray-100 cursor-pointer border-b-2 border-b-gray-200'>
             
-            <TweetMessage tweet={tweet} user={GUser} />
+            <TweetMessage tweet={tweet} />
 
             <div className='flex'>
                 <div className='p-2'>
