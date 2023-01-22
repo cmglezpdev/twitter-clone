@@ -8,6 +8,7 @@ import { useForm } from '../../hooks';
 import { validations as vdts } from '../../services';
 import { AuthLayout } from '../../layouts';
 import { AuthContext } from '../../context/auth';
+import { toast } from 'react-toastify';
 
 interface FormData {
     name?: string;
@@ -48,8 +49,8 @@ const RegisterPage = () => {
         e.preventDefault();
         try {
             await signUpUser(values);
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            toast.error( error.response.data.message )
         }
     }
 

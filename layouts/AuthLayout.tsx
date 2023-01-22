@@ -1,5 +1,6 @@
 import { ReactNode, FC } from 'react';
 import Head from "next/head"
+import { ToastContainer } from 'react-toastify';
 
 interface Props {
     title: string;
@@ -20,6 +21,20 @@ export const AuthLayout:FC<Props> = ({  title, pageDescription, children }) => {
             <main>
                 { children }
             </main>
+
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                limit={2}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </>
     )
 }

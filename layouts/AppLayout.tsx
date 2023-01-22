@@ -2,6 +2,7 @@ import { FC, ReactNode, useContext } from 'react';
 import Head from "next/head";
 import { FooterAccount, LeftPanel, SideMenu, TopBar } from "../components";
 import { AuthContext } from '../context/auth';
+import { ToastContainer } from 'react-toastify';
 
 interface Props {
     title: string;
@@ -34,6 +35,20 @@ export const AppLayout:FC<Props> = ( props ) => {
             {
               !user && <FooterAccount />
             }
+
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                limit={2}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </> 
 
     )

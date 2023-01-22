@@ -1,9 +1,9 @@
 import { FC, MouseEvent, useRef, useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { IoMdClose } from 'react-icons/io'
+import { toast } from 'react-toastify';
 
 import { useForm } from '../../hooks';
-import { IUser } from '../../interfaces';
 import { validations } from '../../services';
 import { UserContext } from '../../context/user';
 import { twitterApi } from '../../api';
@@ -82,6 +82,7 @@ export const ProfileSettingsModal:FC<Props> = ({ open, closeModal }) => {
         setProfileUser(user!._id);
         setUser(user!._id);
         closeModal();
+        toast.success('Profile edited successfully!')
     }
 
     return (

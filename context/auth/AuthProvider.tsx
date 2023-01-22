@@ -35,16 +35,14 @@ export const AuthProvider:FC<{ children: ReactNode }> = ({ children }) => {
         signIn('credentials', { email, password, callbackUrl: '/' })
     }, [])
 
+    // TODO: Cambiar todo el mecanismo para que devuelva un objeto con el mensaje y el error si existe
+    // en ves de usar el trycatch(En el UserProvider también)
     const signUpUser = useCallback( async ( credentials: any ) => {
         const { email = '', password = '' } = credentials;
+        await twitterApi.post('/users/create', credentials);
+        logInUser(email, password);
+        deleteUser();
 
-        try {
-            await twitterApi.post('/users/create', credentials);
-            logInUser(email, password);
-            deleteUser();
-        } catch (error) {
-            console.log(error);            
-        }
     }, [deleteUser, logInUser])
 
     const logOutUser = useCallback( () => {

@@ -1,5 +1,6 @@
 import { FC, MouseEvent, useRef, useState, useContext } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 import { IoMdClose } from 'react-icons/io'
 import { GoFileMedia } from 'react-icons/go'
@@ -31,6 +32,7 @@ export const WriteTweetModal:FC<Props> = ({ open, closeModal }) => {
         e.preventDefault();
         await twitterApi.post('/tweets/create', { text: tweetContent, userId: user?._id });
         closeModal();
+        toast.success('Tweet created successfully!!!');
     }
 
     return (

@@ -1,6 +1,9 @@
 
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { toast } from 'react-toastify'; 
+
 import { BsTwitter } from 'react-icons/bs'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
@@ -18,6 +21,7 @@ interface FormData {
  
 const LoginPage = () => {
 
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const { logInUser } = useContext(AuthContext);
 
@@ -33,6 +37,14 @@ const LoginPage = () => {
             messageError: 'The password is not valid'
         }
     });
+
+    useEffect(() => {
+        if( router.query["error"] === "CredentialsSignin" ) {
+            toast.error("Invalid Email/Password!");
+            return;
+        }
+    }, [router.query])
+
 
     const onSubmit = (e:any) => {
         e.preventDefault(); 
