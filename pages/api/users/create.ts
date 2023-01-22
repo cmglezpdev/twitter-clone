@@ -28,8 +28,12 @@ async function createUser(req: NextApiRequest, res: NextApiResponse<Data>) {
     if( password.trim().length < 8 )
         return res.status(400).json({ message: 'Password must be at least 8 characters long' })
     
-    // TODO: Verificar que no exista otro username igual
-    const username = email.split('@')[0];
+    const existuser = await User.find({ email }).lean();
+    if( existuser ) return res.status(400).json({ message: 'The email already exists' })
+    
+    let username = email.split('@')[0];
+    const existusername = await User.find({ username }).lean();
+    if( existusername ) username = username + (Math.random() * 100).toString();
 
     try {
         db.connect();
